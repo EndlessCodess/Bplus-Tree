@@ -1,0 +1,17 @@
+Checks: >
+  -*,
+  bugprone-*,
+  performance-*,
+  readability-*,
+  modernize-*,
+  clang-analyzer-*,
+  cppcoreguidelines-*,
+  google-*,
+  hicpp-*
+
+FormatStyle: none  # 避免自动格式化代码
+SystemIncludePaths:  # 如果需要，添加系统头文件路径
+  - /usr/include
+  - /usr/local/include
+  - /path/to/your/custom/includes
+
