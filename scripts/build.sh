@@ -50,7 +50,7 @@ mkdir "$BUILD_DIR" || error_exit "Failed to create build directory."
 cd "$BUILD_DIR" || error_exit "Failed to enter build directory."
 
 # 3.配置CMake项目
-cmake -DCMAKE_BUILD_TYPE=${BUILD_TYPE} ..|| error_exit "CMake configuration failed."
+cmake -S .. -B . -DCMAKE_BUILD_TYPE=${BUILD_TYPE} || error_exit "CMake configuration failed."
 
 # 4.编译
 make || error_exit "Build failed."
