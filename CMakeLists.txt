@@ -21,7 +21,7 @@ include_directories(${PROJECT_SOURCE_DIR}/include)
 # 设置源文件变量
 set(SRC_FILES
     ${PROJECT_SOURCE_DIR}/src/BplusTree.cpp  
-    ${PROJECT_SOURCE_DIR}/src/BNode.cpp
+    #${PROJECT_SOURCE_DIR}/src/BNode.cpp
     ${PROJECT_SOURCE_DIR}/src/main.cpp
 )
 

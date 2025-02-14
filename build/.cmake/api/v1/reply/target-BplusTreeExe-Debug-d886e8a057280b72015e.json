@@ -2,7 +2,7 @@
 	"artifacts" : 
 	[
 		{
-			"path" : "BplusTreeExe"
+			"path" : "/root/xy/Bplus-Tree/bin/Debug/BplusTreeExe"
 		}
 	],
 	"backtrace" : 1,
@@ -49,6 +49,9 @@
 			"compileCommandFragments" : 
 			[
 				{
+					"fragment" : "-g"
+				},
+				{
 					"backtrace" : 2,
 					"fragment" : "-Wall"
 				},
@@ -87,8 +90,7 @@
 			"sourceIndexes" : 
 			[
 				0,
-				1,
-				2
+				1
 			]
 		}
 	],
@@ -97,6 +99,10 @@
 	{
 		"commandFragments" : 
 		[
+			{
+				"fragment" : "-g",
+				"role" : "flags"
+			},
 			{
 				"fragment" : "",
 				"role" : "flags"
@@ -118,8 +124,7 @@
 			"sourceIndexes" : 
 			[
 				0,
-				1,
-				2
+				1
 			]
 		}
 	],
@@ -129,12 +134,6 @@
 			"backtrace" : 1,
 			"compileGroupIndex" : 0,
 			"path" : "src/BplusTree.cpp",
-			"sourceGroupIndex" : 0
-		},
-		{
-			"backtrace" : 1,
-			"compileGroupIndex" : 0,
-			"path" : "src/BNode.cpp",
 			"sourceGroupIndex" : 0
 		},
 		{

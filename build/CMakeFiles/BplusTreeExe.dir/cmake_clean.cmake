@@ -1,8 +1,6 @@
 file(REMOVE_RECURSE
-  "BplusTreeExe"
-  "BplusTreeExe.pdb"
-  "CMakeFiles/BplusTreeExe.dir/src/BNode.cpp.o"
-  "CMakeFiles/BplusTreeExe.dir/src/BNode.cpp.o.d"
+  "../bin/Debug/BplusTreeExe"
+  "../bin/Debug/BplusTreeExe.pdb"
   "CMakeFiles/BplusTreeExe.dir/src/BplusTree.cpp.o"
   "CMakeFiles/BplusTreeExe.dir/src/BplusTree.cpp.o.d"
   "CMakeFiles/BplusTreeExe.dir/src/main.cpp.o"

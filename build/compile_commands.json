@@ -1,0 +1,12 @@
+[
+{
+  "directory": "/root/xy/Bplus-Tree/build",
+  "command": "/usr/bin/clang++  -I/root/xy/Bplus-Tree/include -g -Wall -Wextra -pedantic -Werror -std=c++17 -o CMakeFiles/BplusTreeExe.dir/src/BplusTree.cpp.o -c /root/xy/Bplus-Tree/src/BplusTree.cpp",
+  "file": "/root/xy/Bplus-Tree/src/BplusTree.cpp"
+},
+{
+  "directory": "/root/xy/Bplus-Tree/build",
+  "command": "/usr/bin/clang++  -I/root/xy/Bplus-Tree/include -g -Wall -Wextra -pedantic -Werror -std=c++17 -o CMakeFiles/BplusTreeExe.dir/src/main.cpp.o -c /root/xy/Bplus-Tree/src/main.cpp",
+  "file": "/root/xy/Bplus-Tree/src/main.cpp"
+}
+]

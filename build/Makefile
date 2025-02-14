@@ -129,30 +129,6 @@ BplusTreeExe/fast:
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/BplusTreeExe.dir/build.make CMakeFiles/BplusTreeExe.dir/build
 .PHONY : BplusTreeExe/fast
 
-src/BNode.o: src/BNode.cpp.o
-.PHONY : src/BNode.o
-
-# target to build an object file
-src/BNode.cpp.o:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/BplusTreeExe.dir/build.make CMakeFiles/BplusTreeExe.dir/src/BNode.cpp.o
-.PHONY : src/BNode.cpp.o
-
-src/BNode.i: src/BNode.cpp.i
-.PHONY : src/BNode.i
-
-# target to preprocess a source file
-src/BNode.cpp.i:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/BplusTreeExe.dir/build.make CMakeFiles/BplusTreeExe.dir/src/BNode.cpp.i
-.PHONY : src/BNode.cpp.i
-
-src/BNode.s: src/BNode.cpp.s
-.PHONY : src/BNode.s
-
-# target to generate assembly for a file
-src/BNode.cpp.s:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/BplusTreeExe.dir/build.make CMakeFiles/BplusTreeExe.dir/src/BNode.cpp.s
-.PHONY : src/BNode.cpp.s
-
 src/BplusTree.o: src/BplusTree.cpp.o
 .PHONY : src/BplusTree.o
 
@@ -210,9 +186,6 @@ help:
 	@echo "... edit_cache"
 	@echo "... rebuild_cache"
 	@echo "... BplusTreeExe"
-	@echo "... src/BNode.o"
-	@echo "... src/BNode.i"
-	@echo "... src/BNode.s"
 	@echo "... src/BplusTree.o"
 	@echo "... src/BplusTree.i"
 	@echo "... src/BplusTree.s"

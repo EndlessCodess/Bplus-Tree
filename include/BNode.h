@@ -2,8 +2,8 @@
 #ifndef BNODE_H
 #define BNODE_H
 
-#include <memory>
 #include <vector>
+#include <memory>
 
 //定义模板点类
 template <typename keyType, typename valueType> class Node {
