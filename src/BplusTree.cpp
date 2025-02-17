@@ -161,6 +161,234 @@ void BplusTree<keyType, valueType>::updateParentPointers(
   parent->children.insert(parent->children.begin() + index + 1, newNode);
 }
 
+//删除后调整操作
+template <typename keyType, typename valueType>
+bool BplusTree<keyType, valueType>::adjust(
+    std::shared_ptr<LeafNode<keyType, valueType>> node,
+    std::shared_ptr<InterNode<keyType, valueType>> parent) {
+
+  auto leftSibling = getLeftSibling(node);
+  auto rightSibling = getRightSibling(node);
+
+  //右兄弟借出
+  if (rightSibling && rightSibling->keys.size() > minKeys) {
+    borrowFromR(node, rightSibling, parent);
+    return true;
+  }
+
+  //左兄弟借出
+  if (leftSibling && leftSibling->keys.size() > minKeys) {
+    borrowFromL(node, leftSibling, parent);
+    return true;
+  }
+
+  //右兄弟合并
+  if (rightSibling) {
+    mergeWithR(node, rightSibling, parent);
+    return true;
+  }
+
+  //左兄弟合并
+  if (leftSibling) {
+    mergeWithL(node, leftSibling, parent);
+    return true;
+  }
+
+  //一般不会执行
+  return false;
+}
+
+//找左兄弟
+template <typename keyType, typename valueType>
+std::shared_ptr<LeafNode<keyType, valueType>>
+BplusTree<keyType, valueType>::getLeftSibling(
+    std::shared_ptr<LeafNode<keyType, valueType>> node) {
+
+  if (node->parent) {
+    auto parent = node->parent;
+
+    //找当前节点的位置
+    auto it = std::find(parent->children.begin(), parent->children.end(), node);
+
+    if (it != parent->children.begin()) {
+      return *(it - 1);
+    }
+  }
+  return std::shared_ptr<LeafNode<keyType, valueType>>();
+}
+
+//找右兄弟
+template <typename keyType, typename valueType>
+std::shared_ptr<LeafNode<keyType, valueType>>
+BplusTree<keyType, valueType>::getRightSibling(
+    std::shared_ptr<LeafNode<keyType, valueType>> node) {
+  if (node->parent) {
+    auto parent = node->parent;
+
+    //找当前节点的位置
+    auto it = std::find(parent->children.begin(), parent->children.end(), node);
+
+    if (it != parent->children.end() - 1) {
+      return *(it + 1);
+    }
+  }
+  return std::shared_ptr<LeafNode<keyType, valueType>>();
+}
+
+//从右兄弟借
+template <typename keyType, typename valueType>
+void BplusTree<keyType, valueType>::borrowFromR(
+    std::shared_ptr<LeafNode<keyType, valueType>> node,
+    std::shared_ptr<LeafNode<keyType, valueType>> rightSibling,
+    std::shared_ptr<InterNode<keyType, valueType>> parent) {
+
+  //移入当前节点
+  node->keys.push_back(rightSibling->keys.front());
+  node->values.push_back(rightSibling->values.front());
+
+  //右兄弟删除该key
+  rightSibling->keys.erase(rightSibling->keys.begin());
+  rightSibling->values.erase(rightSibling->values.begin());
+
+  //父节点指针更新
+  auto childIt =
+      std::find(parent->children.begin(), parent->children.end(), node);
+  if (childIt != parent->children.end()) {
+    size_t i = std::distance(parent->children.begin(), childIt);
+    parent->keys[i] = rightSibling->keys.front();
+  }
+}
+
+//找右兄弟合并
+template <typename keyType, typename valueType>
+void BplusTree<keyType, valueType>::mergeWithR(
+    std::shared_ptr<LeafNode<keyType, valueType>> node,
+    std::shared_ptr<LeafNode<keyType, valueType>> rightSibling,
+    std::shared_ptr<InterNode<keyType, valueType>> parent) {
+
+  node->keys.insert(node->keys.end(), rightSibling->keys.begin(),
+                    rightSibling->keys.end());
+
+  node->values.insert(node->values.end(), rightSibling->values.begin(),
+                      rightSibling->keys.end());
+
+  auto childIt =
+      std::find(parent->children.begin(), parent->children.end(), node);
+  if (childIt != parent->children.end()) {
+    size_t i = std::distance(parent->children.begin(), childIt);
+    parent->keys.erase(parent->keys.begin() + i);
+    parent->children.erase(childIt + 1);
+  }
+
+  //递归调整父节点
+  if (parent->keys.size() < minKeys && parent != root) {
+    adjustFather(parent);
+  }
+}
+
+//合并后调整父节点
+template <typename keyType, typename valueType>
+void BplusTree<keyType, valueType>::adjustFather(
+    std::shared_ptr<InterNode<keyType, valueType>> currentNode) {
+
+  //判断是否高度减少
+  if (currentNode == root) {
+    if (currentNode->keys.empty() && currentNode->children.size() == 1) {
+      root = currentNode->children[0];
+      root->parent = nullptr;
+    }
+    return;
+  }
+
+  auto parent = currentNode->parent;
+  if (parent) { //不为根结点
+    bool flag = adjust(currentNode, parent);
+  }
+}
+
+//找左兄弟合并
+template <typename keyType, typename valueType>
+void BplusTree<keyType, valueType>::mergeWithL(
+    std::shared_ptr<LeafNode<keyType, valueType>> node,
+    std::shared_ptr<LeafNode<keyType, valueType>> leftSibling,
+    std::shared_ptr<InterNode<keyType, valueType>> parent) {
+
+  node->keys.insert(node->keys.begin(), leftSibling->keys.begin(),
+                    leftSibling->keys.end());
+  node->values.insert(node->values.begin(), leftSibling->values.begin(),
+                      leftSibling->values.end());
+
+  auto childIt =
+      std::find(parent->children.begin(), parent->children.end(), node);
+  if (childIt != parent->children.end()) {
+    size_t i = std::distance(parent->children.begin(), childIt);
+    parent->keys.erase(parent->keys.begin() + i - 1);
+    parent->children.erase(childIt - 1);
+  }
+
+  //递归调整父节点
+  if (parent->keys.size() < minKeys && parent != root) {
+    adjustFather(parent);
+  }
+}
+
+//从左兄弟借
+template <typename keyType, typename valueType>
+void BplusTree<keyType, valueType>::borrowFromL(
+    std::shared_ptr<LeafNode<keyType, valueType>> node,
+    std::shared_ptr<LeafNode<keyType, valueType>> leftSibling,
+    std::shared_ptr<InterNode<keyType, valueType>> parent) {
+
+  //移入当前节点
+  node->keys.insert(node->keys.begin(), leftSibling->keys.back());
+  node->values.insert(node->values.begin(), leftSibling->values.back());
+
+  //左兄弟删除该key
+  leftSibling->keys.pop_back();
+  leftSibling->values.pop_back();
+
+  //父节点指针更新
+  auto childIt =
+      std::find(parent->children.begin(), parent->children.end(), node);
+  if (childIt != parent->children.end()) {
+    size_t i = std::distance(parent->children.begin(), childIt);
+    parent->keys[i - 1] = node->keys.front();
+  }
+}
+
+//删除操作(test)
+template <typename keyType, typename valueType>
+bool BplusTree<keyType, valueType>::remove(const keyType &key) {
+  // 1.寻找目标叶子结点
+  auto targetLeaf = findLeaf(root, key);
+  if (!targetLeaf) {
+    return false; //未找到叶子结点
+  }
+
+  // 2.在叶子结点中找到对应key，并删除
+  auto it = std::find(targetLeaf->keys.begin(), targetLeaf->keys.end(), key);
+  if (it != targetLeaf->keys.end()) {
+    size_t index = std::distance(targetLeaf->keys.begin(), it);
+    targetLeaf->keys.erase(it);
+    targetLeaf->values.erase(targetLeaf->values.begin() + index);
+  } else {
+    return false; //未在叶子结点中找到key
+  }
+
+  // 3.不满足要求，进入调整过程(?)
+  if (targetLeaf->keys.size() < minKeys) {
+    auto parent = targetLeaf->parent;
+    if (parent) { //非根节点
+      return adjust(targetLeaf, parent);
+    } else { //根结点
+      if (targetLeaf->keys.empty()) {
+        root = nullptr;
+      }
+      return true;
+    }
+  }
+}
+
 //插入操作(test)
 template <typename keyType, typename valueType>
 void BplusTree<keyType, valueType>::insert(const keyType &key,
@@ -275,7 +503,7 @@ BplusTree<keyType, valueType>::rangeSearch(const keyType &startKey,
   //继续寻找后面叶子结点
   auto nextLeaf = startLeaf->next;
   while (nextLeaf) {
-    it = nextLeaf->keys.begin(); 
+    it = nextLeaf->keys.begin();
     while (it != nextLeaf->keys.end()) {
       if (*it > endKey) {
         break;
@@ -311,7 +539,7 @@ void BplusTree<keyType, valueType>::inorderTraversal() const {
   std::cout << std::endl;
 }
 
-// 打印B+树
+//打印B+树
 template <typename keyType, typename valueType>
 void BplusTree<keyType, valueType>::printBplusTree(
     std::shared_ptr<Node<keyType, valueType>> node, const int level) const {
