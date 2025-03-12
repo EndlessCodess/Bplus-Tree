@@ -85,7 +85,7 @@
 						"gcc"
 					]
 				},
-				"path" : "/usr/bin/clang++",
+				"path" : "/usr/bin/clang++-14",
 				"version" : "14.0.0"
 			},
 			"language" : "CXX",

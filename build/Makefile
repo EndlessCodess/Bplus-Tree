@@ -57,10 +57,10 @@ RM = /usr/bin/cmake -E rm -f
 EQUALS = =
 
 # The top-level source directory on which CMake was run.
-CMAKE_SOURCE_DIR = /root/xy/Bplus-Tree
+CMAKE_SOURCE_DIR = /root/xy/BplusTree
 
 # The top-level build directory on which CMake was run.
-CMAKE_BINARY_DIR = /root/xy/Bplus-Tree/build
+CMAKE_BINARY_DIR = /root/xy/BplusTree/build
 
 #=============================================================================
 # Targets provided globally by CMake.
@@ -87,9 +87,9 @@ rebuild_cache/fast: rebuild_cache
 
 # The main all target
 all: cmake_check_build_system
-	$(CMAKE_COMMAND) -E cmake_progress_start /root/xy/Bplus-Tree/build/CMakeFiles /root/xy/Bplus-Tree/build//CMakeFiles/progress.marks
+	$(CMAKE_COMMAND) -E cmake_progress_start /root/xy/BplusTree/build/CMakeFiles /root/xy/BplusTree/build//CMakeFiles/progress.marks
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 all
-	$(CMAKE_COMMAND) -E cmake_progress_start /root/xy/Bplus-Tree/build/CMakeFiles 0
+	$(CMAKE_COMMAND) -E cmake_progress_start /root/xy/BplusTree/build/CMakeFiles 0
 .PHONY : all
 
 # The main clean target
@@ -128,6 +128,19 @@ BplusTreeExe: cmake_check_build_system
 BplusTreeExe/fast:
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/BplusTreeExe.dir/build.make CMakeFiles/BplusTreeExe.dir/build
 .PHONY : BplusTreeExe/fast
+
+#=============================================================================
+# Target rules for targets named run_clang_tidy
+
+# Build rule for target.
+run_clang_tidy: cmake_check_build_system
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 run_clang_tidy
+.PHONY : run_clang_tidy
+
+# fast build rule for target.
+run_clang_tidy/fast:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/run_clang_tidy.dir/build.make CMakeFiles/run_clang_tidy.dir/build
+.PHONY : run_clang_tidy/fast
 
 src/BplusTree.o: src/BplusTree.cpp.o
 .PHONY : src/BplusTree.o
@@ -185,6 +198,7 @@ help:
 	@echo "... depend"
 	@echo "... edit_cache"
 	@echo "... rebuild_cache"
+	@echo "... run_clang_tidy"
 	@echo "... BplusTreeExe"
 	@echo "... src/BplusTree.o"
 	@echo "... src/BplusTree.i"

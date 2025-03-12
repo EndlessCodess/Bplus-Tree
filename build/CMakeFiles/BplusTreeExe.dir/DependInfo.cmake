@@ -8,8 +8,8 @@ set(CMAKE_DEPENDS_LANGUAGES
 
 # The set of dependency files which are needed:
 set(CMAKE_DEPENDS_DEPENDENCY_FILES
-  "/root/xy/Bplus-Tree/src/BplusTree.cpp" "CMakeFiles/BplusTreeExe.dir/src/BplusTree.cpp.o" "gcc" "CMakeFiles/BplusTreeExe.dir/src/BplusTree.cpp.o.d"
-  "/root/xy/Bplus-Tree/src/main.cpp" "CMakeFiles/BplusTreeExe.dir/src/main.cpp.o" "gcc" "CMakeFiles/BplusTreeExe.dir/src/main.cpp.o.d"
+  "/root/xy/BplusTree/src/BplusTree.cpp" "CMakeFiles/BplusTreeExe.dir/src/BplusTree.cpp.o" "gcc" "CMakeFiles/BplusTreeExe.dir/src/BplusTree.cpp.o.d"
+  "/root/xy/BplusTree/src/main.cpp" "CMakeFiles/BplusTreeExe.dir/src/main.cpp.o" "gcc" "CMakeFiles/BplusTreeExe.dir/src/main.cpp.o.d"
   )
 
 # Targets to which this target links.

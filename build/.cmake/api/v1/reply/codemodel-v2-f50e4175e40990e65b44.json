@@ -15,7 +15,8 @@
 					"source" : ".",
 					"targetIndexes" : 
 					[
-						0
+						0,
+						1
 					]
 				}
 			],
@@ -30,7 +31,8 @@
 					"name" : "BplusTree",
 					"targetIndexes" : 
 					[
-						0
+						0,
+						1
 					]
 				}
 			],
@@ -39,8 +41,15 @@
 				{
 					"directoryIndex" : 0,
 					"id" : "BplusTreeExe::@6890427a1f51a3e7e1df",
-					"jsonFile" : "target-BplusTreeExe-Debug-d886e8a057280b72015e.json",
+					"jsonFile" : "target-BplusTreeExe-Debug-b4db91d71bad123b42e5.json",
 					"name" : "BplusTreeExe",
+					"projectIndex" : 0
+				},
+				{
+					"directoryIndex" : 0,
+					"id" : "run_clang_tidy::@6890427a1f51a3e7e1df",
+					"jsonFile" : "target-run_clang_tidy-Debug-1d1e4dde699f6e402d70.json",
+					"name" : "run_clang_tidy",
 					"projectIndex" : 0
 				}
 			]
@@ -49,8 +58,8 @@
 	"kind" : "codemodel",
 	"paths" : 
 	{
-		"build" : "/root/xy/Bplus-Tree/build",
-		"source" : "/root/xy/Bplus-Tree"
+		"build" : "/root/xy/BplusTree/build",
+		"source" : "/root/xy/BplusTree"
 	},
 	"version" : 
 	{

@@ -54,10 +54,10 @@ RM = /usr/bin/cmake -E rm -f
 EQUALS = =
 
 # The top-level source directory on which CMake was run.
-CMAKE_SOURCE_DIR = /root/xy/Bplus-Tree
+CMAKE_SOURCE_DIR = /root/xy/BplusTree
 
 # The top-level build directory on which CMake was run.
-CMAKE_BINARY_DIR = /root/xy/Bplus-Tree/build
+CMAKE_BINARY_DIR = /root/xy/BplusTree/build
 
 #=============================================================================
 # Directory level rules for the build root directory
@@ -72,23 +72,24 @@ preinstall:
 
 # The main recursive "clean" target.
 clean: CMakeFiles/BplusTreeExe.dir/clean
+clean: CMakeFiles/run_clang_tidy.dir/clean
 .PHONY : clean
 
 #=============================================================================
 # Target rules for target CMakeFiles/BplusTreeExe.dir
 
 # All Build rule for target.
-CMakeFiles/BplusTreeExe.dir/all:
+CMakeFiles/BplusTreeExe.dir/all: CMakeFiles/run_clang_tidy.dir/all
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/BplusTreeExe.dir/build.make CMakeFiles/BplusTreeExe.dir/depend
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/BplusTreeExe.dir/build.make CMakeFiles/BplusTreeExe.dir/build
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --progress-dir=/root/xy/Bplus-Tree/build/CMakeFiles --progress-num=1,2,3 "Built target BplusTreeExe"
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --progress-dir=/root/xy/BplusTree/build/CMakeFiles --progress-num=1,2,3 "Built target BplusTreeExe"
 .PHONY : CMakeFiles/BplusTreeExe.dir/all
 
 # Build rule for subdir invocation for target.
 CMakeFiles/BplusTreeExe.dir/rule: cmake_check_build_system
-	$(CMAKE_COMMAND) -E cmake_progress_start /root/xy/Bplus-Tree/build/CMakeFiles 3
+	$(CMAKE_COMMAND) -E cmake_progress_start /root/xy/BplusTree/build/CMakeFiles 4
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 CMakeFiles/BplusTreeExe.dir/all
-	$(CMAKE_COMMAND) -E cmake_progress_start /root/xy/Bplus-Tree/build/CMakeFiles 0
+	$(CMAKE_COMMAND) -E cmake_progress_start /root/xy/BplusTree/build/CMakeFiles 0
 .PHONY : CMakeFiles/BplusTreeExe.dir/rule
 
 # Convenience name for target.
@@ -99,6 +100,32 @@ BplusTreeExe: CMakeFiles/BplusTreeExe.dir/rule
 CMakeFiles/BplusTreeExe.dir/clean:
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/BplusTreeExe.dir/build.make CMakeFiles/BplusTreeExe.dir/clean
 .PHONY : CMakeFiles/BplusTreeExe.dir/clean
+
+#=============================================================================
+# Target rules for target CMakeFiles/run_clang_tidy.dir
+
+# All Build rule for target.
+CMakeFiles/run_clang_tidy.dir/all:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/run_clang_tidy.dir/build.make CMakeFiles/run_clang_tidy.dir/depend
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/run_clang_tidy.dir/build.make CMakeFiles/run_clang_tidy.dir/build
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --progress-dir=/root/xy/BplusTree/build/CMakeFiles --progress-num=4 "Built target run_clang_tidy"
+.PHONY : CMakeFiles/run_clang_tidy.dir/all
+
+# Build rule for subdir invocation for target.
+CMakeFiles/run_clang_tidy.dir/rule: cmake_check_build_system
+	$(CMAKE_COMMAND) -E cmake_progress_start /root/xy/BplusTree/build/CMakeFiles 1
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 CMakeFiles/run_clang_tidy.dir/all
+	$(CMAKE_COMMAND) -E cmake_progress_start /root/xy/BplusTree/build/CMakeFiles 0
+.PHONY : CMakeFiles/run_clang_tidy.dir/rule
+
+# Convenience name for target.
+run_clang_tidy: CMakeFiles/run_clang_tidy.dir/rule
+.PHONY : run_clang_tidy
+
+# clean rule for target.
+CMakeFiles/run_clang_tidy.dir/clean:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/run_clang_tidy.dir/build.make CMakeFiles/run_clang_tidy.dir/clean
+.PHONY : CMakeFiles/run_clang_tidy.dir/clean
 
 #=============================================================================
 # Special targets to cleanup operation of make.

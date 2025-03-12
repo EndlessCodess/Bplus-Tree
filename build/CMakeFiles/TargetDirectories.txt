@@ -1,3 +1,4 @@
-/root/xy/Bplus-Tree/build/CMakeFiles/BplusTreeExe.dir
-/root/xy/Bplus-Tree/build/CMakeFiles/edit_cache.dir
-/root/xy/Bplus-Tree/build/CMakeFiles/rebuild_cache.dir
+/root/xy/BplusTree/build/CMakeFiles/BplusTreeExe.dir
+/root/xy/BplusTree/build/CMakeFiles/run_clang_tidy.dir
+/root/xy/BplusTree/build/CMakeFiles/edit_cache.dir
+/root/xy/BplusTree/build/CMakeFiles/rebuild_cache.dir

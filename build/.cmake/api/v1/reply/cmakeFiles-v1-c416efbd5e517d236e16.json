@@ -145,8 +145,8 @@
 	"kind" : "cmakeFiles",
 	"paths" : 
 	{
-		"build" : "/root/xy/Bplus-Tree/build",
-		"source" : "/root/xy/Bplus-Tree"
+		"build" : "/root/xy/BplusTree/build",
+		"source" : "/root/xy/BplusTree"
 	},
 	"version" : 
 	{

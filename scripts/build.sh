@@ -61,4 +61,3 @@ if [ ! -f "$EXECUTABLE_NAME" ]; then
     error_exit "Build file not found."
 fi
 success "Build completed successfully."
-
