@@ -1,1 +1,1 @@
-/usr/bin/clang++-14 -g CMakeFiles/BplusTreeExe.dir/src/BplusTree.cpp.o CMakeFiles/BplusTreeExe.dir/src/main.cpp.o -o ../bin/Debug/BplusTreeExe 
+/usr/bin/clang++ -g CMakeFiles/BplusTreeExe.dir/src/main.cpp.o -o ../bin/Debug/BplusTreeExe 

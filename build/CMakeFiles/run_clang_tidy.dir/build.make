@@ -68,7 +68,7 @@ include CMakeFiles/run_clang_tidy.dir/progress.make
 
 CMakeFiles/run_clang_tidy:
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --blue --bold --progress-dir=/root/xy/BplusTree/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_1) "Running clang-tidy on source files"
-	clang-tidy -p /root/xy/BplusTree/build /root/xy/BplusTree/include/BNode.h /root/xy/BplusTree/include/BplusTree.h /root/xy/BplusTree/src/BplusTree.cpp /root/xy/BplusTree/src/main.cpp
+	clang-tidy -p /root/xy/BplusTree/build /root/xy/BplusTree/include/BNode.h /root/xy/BplusTree/include/BplusTree.h /root/xy/BplusTree/src/BplusTree.cpp /root/xy/BplusTree/src/main.cpp /root/xy/BplusTree/test/Bplus_query_test.cpp /root/xy/BplusTree/test/hello_test.cc
 
 run_clang_tidy: CMakeFiles/run_clang_tidy
 run_clang_tidy: CMakeFiles/run_clang_tidy.dir/build.make

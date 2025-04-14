@@ -12,6 +12,8 @@ class Node
 public:
   // 指向父节点
   std::shared_ptr<Node> parent;
+  // 关键字
+  std::vector<keyType> keys;
 
   virtual ~Node() = default;
 
@@ -25,9 +27,6 @@ class InterNode : public Node<keyType, valueType>
 {
 
 public:
-  // 存储关键字
-  std::vector<keyType> keys;
-
   // 存储指向子节点的指针
   std::vector<std::shared_ptr<Node<keyType, valueType>>> children;
 
@@ -40,7 +39,6 @@ class LeafNode : public Node<keyType, valueType>
 {
 
 public:
-  std::vector<keyType> keys;
   std::vector<valueType> values;
 
   // 指向下一个叶子结点

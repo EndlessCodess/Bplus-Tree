@@ -23,7 +23,7 @@ private:
   // 寻找叶子结点
   std::shared_ptr<LeafNode<keyType, valueType>>
   findLeaf(std::shared_ptr<Node<keyType, valueType>> currentNode,
-           const keyType &key);
+           const keyType &key) const;
 
   // 插入叶子结点
   void insertInLeaf(std::shared_ptr<LeafNode<keyType, valueType>> targetLeaf,
@@ -36,11 +36,10 @@ private:
   void splitInter(std::shared_ptr<InterNode<keyType, valueType>> interNode);
 
   // 分裂根结点
-  void splitRoot(std::shared_ptr<Node<keyType, valueType>> root);
+  void splitRoot(std::shared_ptr<InterNode<keyType, valueType>> root);
 
   // 分裂后更新父亲指针
-  void updateParentPointers(std::shared_ptr<Node<keyType, valueType>> parent,
-                            std::shared_ptr<Node<keyType, valueType>> oldNode,
+  void updateParentPointers(std::shared_ptr<InterNode<keyType, valueType>> parent,
                             std::shared_ptr<Node<keyType, valueType>> newNode,
                             const keyType &key);
 

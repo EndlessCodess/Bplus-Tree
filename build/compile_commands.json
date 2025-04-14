@@ -1,12 +1,42 @@
 [
 {
   "directory": "/root/xy/BplusTree/build",
-  "command": "/usr/bin/clang++-14  -I/root/xy/BplusTree/include -I/usr/lib/gcc/x86_64-linux-gnu/12/include -isystem /usr/include/c++/12 -isystem /usr/include/x86_64-linux-gnu/c++/12 -isystem /usr/include/c++/12/backward -isystem /usr/lib/llvm-14/lib/clang/14.0.0/include -isystem /usr/local/include -isystem /usr/include/x86_64-linux-gnu -isystem /usr/include -g -Wall -Wextra -pedantic -Werror -std=c++17 -o CMakeFiles/BplusTreeExe.dir/src/BplusTree.cpp.o -c /root/xy/BplusTree/src/BplusTree.cpp",
+  "command": "/usr/bin/clang++   -g -Wall -Wextra -pedantic -Werror -std=c++17 -o CMakeFiles/BplusTree.dir/src/BplusTree.cpp.o -c /root/xy/BplusTree/src/BplusTree.cpp",
   "file": "/root/xy/BplusTree/src/BplusTree.cpp"
 },
 {
   "directory": "/root/xy/BplusTree/build",
-  "command": "/usr/bin/clang++-14  -I/root/xy/BplusTree/include -I/usr/lib/gcc/x86_64-linux-gnu/12/include -isystem /usr/include/c++/12 -isystem /usr/include/x86_64-linux-gnu/c++/12 -isystem /usr/include/c++/12/backward -isystem /usr/lib/llvm-14/lib/clang/14.0.0/include -isystem /usr/local/include -isystem /usr/include/x86_64-linux-gnu -isystem /usr/include -g -Wall -Wextra -pedantic -Werror -std=c++17 -o CMakeFiles/BplusTreeExe.dir/src/main.cpp.o -c /root/xy/BplusTree/src/main.cpp",
+  "command": "/usr/bin/clang++  -I/root/xy/BplusTree/include -I/usr/lib/gcc/x86_64-linux-gnu/12/include -g -Wall -Wextra -pedantic -Werror -std=c++17 -o CMakeFiles/BplusTreeExe.dir/src/main.cpp.o -c /root/xy/BplusTree/src/main.cpp",
   "file": "/root/xy/BplusTree/src/main.cpp"
+},
+{
+  "directory": "/root/xy/BplusTree/build/_deps/googletest-build/googlemock",
+  "command": "/usr/bin/clang++  -I/root/xy/BplusTree/build/_deps/googletest-src/googlemock/include -I/root/xy/BplusTree/build/_deps/googletest-src/googlemock -isystem /root/xy/BplusTree/build/_deps/googletest-src/googletest/include -isystem /root/xy/BplusTree/build/_deps/googletest-src/googletest -g -Wall -Wshadow -Wconversion -DGTEST_HAS_PTHREAD=1 -fexceptions -W -Wpointer-arith -Wreturn-type -Wcast-qual -Wwrite-strings -Wswitch -Wunused-parameter -Wcast-align -Wchar-subscripts -Winline -Wredundant-decls -Wall -Wextra -pedantic -Werror -std=c++17 -o CMakeFiles/gmock.dir/src/gmock-all.cc.o -c /root/xy/BplusTree/build/_deps/googletest-src/googlemock/src/gmock-all.cc",
+  "file": "/root/xy/BplusTree/build/_deps/googletest-src/googlemock/src/gmock-all.cc"
+},
+{
+  "directory": "/root/xy/BplusTree/build/_deps/googletest-build/googlemock",
+  "command": "/usr/bin/clang++  -isystem /root/xy/BplusTree/build/_deps/googletest-src/googlemock/include -isystem /root/xy/BplusTree/build/_deps/googletest-src/googlemock -isystem /root/xy/BplusTree/build/_deps/googletest-src/googletest/include -isystem /root/xy/BplusTree/build/_deps/googletest-src/googletest -g -Wall -Wshadow -Wconversion -DGTEST_HAS_PTHREAD=1 -fexceptions -W -Wpointer-arith -Wreturn-type -Wcast-qual -Wwrite-strings -Wswitch -Wunused-parameter -Wcast-align -Wchar-subscripts -Winline -Wredundant-decls -Wall -Wextra -pedantic -Werror -std=c++17 -o CMakeFiles/gmock_main.dir/src/gmock_main.cc.o -c /root/xy/BplusTree/build/_deps/googletest-src/googlemock/src/gmock_main.cc",
+  "file": "/root/xy/BplusTree/build/_deps/googletest-src/googlemock/src/gmock_main.cc"
+},
+{
+  "directory": "/root/xy/BplusTree/build/_deps/googletest-build/googletest",
+  "command": "/usr/bin/clang++  -I/root/xy/BplusTree/build/_deps/googletest-src/googletest/include -I/root/xy/BplusTree/build/_deps/googletest-src/googletest -g -Wall -Wshadow -Wconversion -DGTEST_HAS_PTHREAD=1 -fexceptions -W -Wpointer-arith -Wreturn-type -Wcast-qual -Wwrite-strings -Wswitch -Wunused-parameter -Wcast-align -Wchar-subscripts -Winline -Wredundant-decls -Wall -Wextra -pedantic -Werror -std=c++17 -o CMakeFiles/gtest.dir/src/gtest-all.cc.o -c /root/xy/BplusTree/build/_deps/googletest-src/googletest/src/gtest-all.cc",
+  "file": "/root/xy/BplusTree/build/_deps/googletest-src/googletest/src/gtest-all.cc"
+},
+{
+  "directory": "/root/xy/BplusTree/build/_deps/googletest-build/googletest",
+  "command": "/usr/bin/clang++  -isystem /root/xy/BplusTree/build/_deps/googletest-src/googletest/include -isystem /root/xy/BplusTree/build/_deps/googletest-src/googletest -g -Wall -Wshadow -Wconversion -DGTEST_HAS_PTHREAD=1 -fexceptions -W -Wpointer-arith -Wreturn-type -Wcast-qual -Wwrite-strings -Wswitch -Wunused-parameter -Wcast-align -Wchar-subscripts -Winline -Wredundant-decls -Wall -Wextra -pedantic -Werror -std=c++17 -o CMakeFiles/gtest_main.dir/src/gtest_main.cc.o -c /root/xy/BplusTree/build/_deps/googletest-src/googletest/src/gtest_main.cc",
+  "file": "/root/xy/BplusTree/build/_deps/googletest-src/googletest/src/gtest_main.cc"
+},
+{
+  "directory": "/root/xy/BplusTree/build/test",
+  "command": "/usr/bin/clang++  -I/root/xy/BplusTree/include -isystem /root/xy/BplusTree/build/_deps/googletest-src/googletest/include -isystem /root/xy/BplusTree/build/_deps/googletest-src/googletest -g -Wall -Wextra -pedantic -Werror -std=c++17 -o CMakeFiles/hello_test.dir/hello_test.cc.o -c /root/xy/BplusTree/test/hello_test.cc",
+  "file": "/root/xy/BplusTree/test/hello_test.cc"
+},
+{
+  "directory": "/root/xy/BplusTree/build/test",
+  "command": "/usr/bin/clang++  -I/root/xy/BplusTree/include -isystem /root/xy/BplusTree/build/_deps/googletest-src/googletest/include -isystem /root/xy/BplusTree/build/_deps/googletest-src/googletest -g -Wall -Wextra -pedantic -Werror -std=c++17 -o CMakeFiles/Bplus_query_test.dir/Bplus_query_test.cpp.o -c /root/xy/BplusTree/test/Bplus_query_test.cpp",
+  "file": "/root/xy/BplusTree/test/Bplus_query_test.cpp"
 }
 ]
