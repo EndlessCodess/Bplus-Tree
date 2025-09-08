@@ -53,10 +53,10 @@ RM = /usr/bin/cmake -E rm -f
 EQUALS = =
 
 # The top-level source directory on which CMake was run.
-CMAKE_SOURCE_DIR = /root/xy/BplusTree
+CMAKE_SOURCE_DIR = /root/xy/c_plusprojects/Bplus-Tree
 
 # The top-level build directory on which CMake was run.
-CMAKE_BINARY_DIR = /root/xy/BplusTree/build
+CMAKE_BINARY_DIR = /root/xy/c_plusprojects/Bplus-Tree/build
 
 # Utility rule file for run_clang_tidy.
 
@@ -67,8 +67,8 @@ include CMakeFiles/run_clang_tidy.dir/compiler_depend.make
 include CMakeFiles/run_clang_tidy.dir/progress.make
 
 CMakeFiles/run_clang_tidy:
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --blue --bold --progress-dir=/root/xy/BplusTree/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_1) "Running clang-tidy on source files"
-	clang-tidy -p /root/xy/BplusTree/build /root/xy/BplusTree/include/BNode.h /root/xy/BplusTree/include/BplusTree.h /root/xy/BplusTree/src/BplusTree.cpp /root/xy/BplusTree/src/main.cpp /root/xy/BplusTree/test/Bplus_query_test.cpp /root/xy/BplusTree/test/hello_test.cc
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --blue --bold --progress-dir=/root/xy/c_plusprojects/Bplus-Tree/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_1) "Running clang-tidy on source files"
+	clang-tidy -p /root/xy/c_plusprojects/Bplus-Tree/build /root/xy/c_plusprojects/Bplus-Tree/include/BNode.h /root/xy/c_plusprojects/Bplus-Tree/include/BplusTree.h /root/xy/c_plusprojects/Bplus-Tree/src/BplusTree.cpp /root/xy/c_plusprojects/Bplus-Tree/src/main.cpp /root/xy/c_plusprojects/Bplus-Tree/test/Bplus_query_test.cpp /root/xy/c_plusprojects/Bplus-Tree/test/hello_test.cc
 
 run_clang_tidy: CMakeFiles/run_clang_tidy
 run_clang_tidy: CMakeFiles/run_clang_tidy.dir/build.make
@@ -83,6 +83,6 @@ CMakeFiles/run_clang_tidy.dir/clean:
 .PHONY : CMakeFiles/run_clang_tidy.dir/clean
 
 CMakeFiles/run_clang_tidy.dir/depend:
-	cd /root/xy/BplusTree/build && $(CMAKE_COMMAND) -E cmake_depends "Unix Makefiles" /root/xy/BplusTree /root/xy/BplusTree /root/xy/BplusTree/build /root/xy/BplusTree/build /root/xy/BplusTree/build/CMakeFiles/run_clang_tidy.dir/DependInfo.cmake --color=$(COLOR)
+	cd /root/xy/c_plusprojects/Bplus-Tree/build && $(CMAKE_COMMAND) -E cmake_depends "Unix Makefiles" /root/xy/c_plusprojects/Bplus-Tree /root/xy/c_plusprojects/Bplus-Tree /root/xy/c_plusprojects/Bplus-Tree/build /root/xy/c_plusprojects/Bplus-Tree/build /root/xy/c_plusprojects/Bplus-Tree/build/CMakeFiles/run_clang_tidy.dir/DependInfo.cmake --color=$(COLOR)
 .PHONY : CMakeFiles/run_clang_tidy.dir/depend
 

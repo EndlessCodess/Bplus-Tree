@@ -1,9 +1,8 @@
-
-# 设置Cmake最低版本
+# 设置 CMake 最低版本
 cmake_minimum_required(VERSION 3.16)
 project(BplusTree)
 
-# 设置C++版本
+# 设置 C++ 版本
 set(CMAKE_CXX_STANDARD 17)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
 set(CMAKE_CXX_EXTENSIONS OFF)
@@ -19,29 +18,19 @@ else()
     add_compile_options(-Wall -Wextra -pedantic -Werror)
 endif()
 
-# 包含 FetchContent 模块用于下载 Google Test
-include(FetchContent)
-
-# 声明 Google Test 并指定下载地址
-FetchContent_Declare(
-  googletest
-  GIT_REPOSITORY https://github.com/google/googletest.git
-  GIT_TAG release-1.12.1
-)
-
-# 下载并构建 Google Test
-FetchContent_MakeAvailable(googletest)
+# 引入本地 Google Test
+add_subdirectory(${PROJECT_SOURCE_DIR}/third_party/googletest)
 
 # 启用 CMake 的测试功能
 enable_testing()
 
-# 编译 BplusTree 库(to do)
+# 编译 BplusTree 库
 add_library(
     BplusTree
     ${PROJECT_SOURCE_DIR}/src/BplusTree.cpp
 )
 
-set (LIBRARY_OUTPUT_PATH ${PROJECT_SOURCE_DIR}/lib)
+set(LIBRARY_OUTPUT_PATH ${PROJECT_SOURCE_DIR}/lib)
 
 # 设置源文件变量
 file(GLOB SRC_FILES
@@ -58,16 +47,9 @@ add_executable(BplusTreeExe
     ${PROJECT_SOURCE_DIR}/lib/libBplusTree.a
 )
 
-
 # 添加头文件
 target_include_directories(BplusTreeExe PRIVATE ${PROJECT_SOURCE_DIR}/include)
 
-# 将标准库的头文件路径添加到目标
-target_include_directories(BplusTreeExe PRIVATE 
-    /usr/include/c++/12
-    /usr/include/x86_64-linux-gnu/c++/12
-    /usr/lib/gcc/x86_64-linux-gnu/12/include
-)
 
 # 设置输出目录
 set_target_properties(BplusTreeExe PROPERTIES
@@ -80,7 +62,6 @@ add_custom_target(run_clang_tidy
     COMMAND clang-tidy -p ${CMAKE_BINARY_DIR} ${SRC_FILES}
     COMMENT "Running clang-tidy on source files"
     VERBATIM)
-
 
 # 确保在构建目标之前运行 clang-tidy
 add_dependencies(BplusTreeExe run_clang_tidy)

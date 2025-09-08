@@ -1,4 +1,4 @@
-# Install script for directory: /root/xy/BplusTree
+# Install script for directory: /root/xy/c_plusprojects/Bplus-Tree
 
 # Set the install prefix
 if(NOT DEFINED CMAKE_INSTALL_PREFIX)
@@ -44,12 +44,12 @@ endif()
 
 if(NOT CMAKE_INSTALL_LOCAL_ONLY)
   # Include the install script for the subdirectory.
-  include("/root/xy/BplusTree/build/_deps/googletest-build/cmake_install.cmake")
+  include("/root/xy/c_plusprojects/Bplus-Tree/build/third_party/googletest/cmake_install.cmake")
 endif()
 
 if(NOT CMAKE_INSTALL_LOCAL_ONLY)
   # Include the install script for the subdirectory.
-  include("/root/xy/BplusTree/build/test/cmake_install.cmake")
+  include("/root/xy/c_plusprojects/Bplus-Tree/build/test/cmake_install.cmake")
 endif()
 
 if(CMAKE_INSTALL_COMPONENT)
@@ -60,5 +60,5 @@ endif()
 
 string(REPLACE ";" "\n" CMAKE_INSTALL_MANIFEST_CONTENT
        "${CMAKE_INSTALL_MANIFEST_FILES}")
-file(WRITE "/root/xy/BplusTree/build/${CMAKE_INSTALL_MANIFEST}"
+file(WRITE "/root/xy/c_plusprojects/Bplus-Tree/build/${CMAKE_INSTALL_MANIFEST}"
      "${CMAKE_INSTALL_MANIFEST_CONTENT}")

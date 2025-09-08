@@ -1,5 +1,0 @@
-if(EXISTS "/root/xy/BplusTree/build/Bplus_query_test[1]_tests.cmake")
-  include("/root/xy/BplusTree/build/Bplus_query_test[1]_tests.cmake")
-else()
-  add_test(Bplus_query_test_NOT_BUILT Bplus_query_test_NOT_BUILT)
-endif()

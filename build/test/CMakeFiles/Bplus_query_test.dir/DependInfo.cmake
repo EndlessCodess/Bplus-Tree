@@ -8,13 +8,13 @@ set(CMAKE_DEPENDS_LANGUAGES
 
 # The set of dependency files which are needed:
 set(CMAKE_DEPENDS_DEPENDENCY_FILES
-  "/root/xy/BplusTree/test/Bplus_query_test.cpp" "test/CMakeFiles/Bplus_query_test.dir/Bplus_query_test.cpp.o" "gcc" "test/CMakeFiles/Bplus_query_test.dir/Bplus_query_test.cpp.o.d"
+  "/root/xy/c_plusprojects/Bplus-Tree/test/Bplus_query_test.cpp" "test/CMakeFiles/Bplus_query_test.dir/Bplus_query_test.cpp.o" "gcc" "test/CMakeFiles/Bplus_query_test.dir/Bplus_query_test.cpp.o.d"
   )
 
 # Targets to which this target links.
 set(CMAKE_TARGET_LINKED_INFO_FILES
-  "/root/xy/BplusTree/build/_deps/googletest-build/googletest/CMakeFiles/gtest_main.dir/DependInfo.cmake"
-  "/root/xy/BplusTree/build/_deps/googletest-build/googletest/CMakeFiles/gtest.dir/DependInfo.cmake"
+  "/root/xy/c_plusprojects/Bplus-Tree/build/third_party/googletest/googletest/CMakeFiles/gtest_main.dir/DependInfo.cmake"
+  "/root/xy/c_plusprojects/Bplus-Tree/build/third_party/googletest/googletest/CMakeFiles/gtest.dir/DependInfo.cmake"
   )
 
 # Fortran module output directory.

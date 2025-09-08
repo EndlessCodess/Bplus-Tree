@@ -57,10 +57,10 @@ RM = /usr/bin/cmake -E rm -f
 EQUALS = =
 
 # The top-level source directory on which CMake was run.
-CMAKE_SOURCE_DIR = /root/xy/BplusTree
+CMAKE_SOURCE_DIR = /root/xy/c_plusprojects/Bplus-Tree
 
 # The top-level build directory on which CMake was run.
-CMAKE_BINARY_DIR = /root/xy/BplusTree/build
+CMAKE_BINARY_DIR = /root/xy/c_plusprojects/Bplus-Tree/build
 
 #=============================================================================
 # Targets provided globally by CMake.
@@ -142,14 +142,14 @@ install/strip/fast: preinstall/fast
 
 # The main all target
 all: cmake_check_build_system
-	cd /root/xy/BplusTree/build && $(CMAKE_COMMAND) -E cmake_progress_start /root/xy/BplusTree/build/CMakeFiles /root/xy/BplusTree/build/test//CMakeFiles/progress.marks
-	cd /root/xy/BplusTree/build && $(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 test/all
-	$(CMAKE_COMMAND) -E cmake_progress_start /root/xy/BplusTree/build/CMakeFiles 0
+	cd /root/xy/c_plusprojects/Bplus-Tree/build && $(CMAKE_COMMAND) -E cmake_progress_start /root/xy/c_plusprojects/Bplus-Tree/build/CMakeFiles /root/xy/c_plusprojects/Bplus-Tree/build/test//CMakeFiles/progress.marks
+	cd /root/xy/c_plusprojects/Bplus-Tree/build && $(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 test/all
+	$(CMAKE_COMMAND) -E cmake_progress_start /root/xy/c_plusprojects/Bplus-Tree/build/CMakeFiles 0
 .PHONY : all
 
 # The main clean target
 clean:
-	cd /root/xy/BplusTree/build && $(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 test/clean
+	cd /root/xy/c_plusprojects/Bplus-Tree/build && $(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 test/clean
 .PHONY : clean
 
 # The main clean target
@@ -158,22 +158,22 @@ clean/fast: clean
 
 # Prepare targets for installation.
 preinstall: all
-	cd /root/xy/BplusTree/build && $(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 test/preinstall
+	cd /root/xy/c_plusprojects/Bplus-Tree/build && $(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 test/preinstall
 .PHONY : preinstall
 
 # Prepare targets for installation.
 preinstall/fast:
-	cd /root/xy/BplusTree/build && $(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 test/preinstall
+	cd /root/xy/c_plusprojects/Bplus-Tree/build && $(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 test/preinstall
 .PHONY : preinstall/fast
 
 # clear depends
 depend:
-	cd /root/xy/BplusTree/build && $(CMAKE_COMMAND) -S$(CMAKE_SOURCE_DIR) -B$(CMAKE_BINARY_DIR) --check-build-system CMakeFiles/Makefile.cmake 1
+	cd /root/xy/c_plusprojects/Bplus-Tree/build && $(CMAKE_COMMAND) -S$(CMAKE_SOURCE_DIR) -B$(CMAKE_BINARY_DIR) --check-build-system CMakeFiles/Makefile.cmake 1
 .PHONY : depend
 
 # Convenience name for target.
 test/CMakeFiles/hello_test.dir/rule:
-	cd /root/xy/BplusTree/build && $(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 test/CMakeFiles/hello_test.dir/rule
+	cd /root/xy/c_plusprojects/Bplus-Tree/build && $(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 test/CMakeFiles/hello_test.dir/rule
 .PHONY : test/CMakeFiles/hello_test.dir/rule
 
 # Convenience name for target.
@@ -182,12 +182,12 @@ hello_test: test/CMakeFiles/hello_test.dir/rule
 
 # fast build rule for target.
 hello_test/fast:
-	cd /root/xy/BplusTree/build && $(MAKE) $(MAKESILENT) -f test/CMakeFiles/hello_test.dir/build.make test/CMakeFiles/hello_test.dir/build
+	cd /root/xy/c_plusprojects/Bplus-Tree/build && $(MAKE) $(MAKESILENT) -f test/CMakeFiles/hello_test.dir/build.make test/CMakeFiles/hello_test.dir/build
 .PHONY : hello_test/fast
 
 # Convenience name for target.
 test/CMakeFiles/Bplus_query_test.dir/rule:
-	cd /root/xy/BplusTree/build && $(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 test/CMakeFiles/Bplus_query_test.dir/rule
+	cd /root/xy/c_plusprojects/Bplus-Tree/build && $(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 test/CMakeFiles/Bplus_query_test.dir/rule
 .PHONY : test/CMakeFiles/Bplus_query_test.dir/rule
 
 # Convenience name for target.
@@ -196,7 +196,7 @@ Bplus_query_test: test/CMakeFiles/Bplus_query_test.dir/rule
 
 # fast build rule for target.
 Bplus_query_test/fast:
-	cd /root/xy/BplusTree/build && $(MAKE) $(MAKESILENT) -f test/CMakeFiles/Bplus_query_test.dir/build.make test/CMakeFiles/Bplus_query_test.dir/build
+	cd /root/xy/c_plusprojects/Bplus-Tree/build && $(MAKE) $(MAKESILENT) -f test/CMakeFiles/Bplus_query_test.dir/build.make test/CMakeFiles/Bplus_query_test.dir/build
 .PHONY : Bplus_query_test/fast
 
 Bplus_query_test.o: Bplus_query_test.cpp.o
@@ -204,7 +204,7 @@ Bplus_query_test.o: Bplus_query_test.cpp.o
 
 # target to build an object file
 Bplus_query_test.cpp.o:
-	cd /root/xy/BplusTree/build && $(MAKE) $(MAKESILENT) -f test/CMakeFiles/Bplus_query_test.dir/build.make test/CMakeFiles/Bplus_query_test.dir/Bplus_query_test.cpp.o
+	cd /root/xy/c_plusprojects/Bplus-Tree/build && $(MAKE) $(MAKESILENT) -f test/CMakeFiles/Bplus_query_test.dir/build.make test/CMakeFiles/Bplus_query_test.dir/Bplus_query_test.cpp.o
 .PHONY : Bplus_query_test.cpp.o
 
 Bplus_query_test.i: Bplus_query_test.cpp.i
@@ -212,7 +212,7 @@ Bplus_query_test.i: Bplus_query_test.cpp.i
 
 # target to preprocess a source file
 Bplus_query_test.cpp.i:
-	cd /root/xy/BplusTree/build && $(MAKE) $(MAKESILENT) -f test/CMakeFiles/Bplus_query_test.dir/build.make test/CMakeFiles/Bplus_query_test.dir/Bplus_query_test.cpp.i
+	cd /root/xy/c_plusprojects/Bplus-Tree/build && $(MAKE) $(MAKESILENT) -f test/CMakeFiles/Bplus_query_test.dir/build.make test/CMakeFiles/Bplus_query_test.dir/Bplus_query_test.cpp.i
 .PHONY : Bplus_query_test.cpp.i
 
 Bplus_query_test.s: Bplus_query_test.cpp.s
@@ -220,7 +220,7 @@ Bplus_query_test.s: Bplus_query_test.cpp.s
 
 # target to generate assembly for a file
 Bplus_query_test.cpp.s:
-	cd /root/xy/BplusTree/build && $(MAKE) $(MAKESILENT) -f test/CMakeFiles/Bplus_query_test.dir/build.make test/CMakeFiles/Bplus_query_test.dir/Bplus_query_test.cpp.s
+	cd /root/xy/c_plusprojects/Bplus-Tree/build && $(MAKE) $(MAKESILENT) -f test/CMakeFiles/Bplus_query_test.dir/build.make test/CMakeFiles/Bplus_query_test.dir/Bplus_query_test.cpp.s
 .PHONY : Bplus_query_test.cpp.s
 
 hello_test.o: hello_test.cc.o
@@ -228,7 +228,7 @@ hello_test.o: hello_test.cc.o
 
 # target to build an object file
 hello_test.cc.o:
-	cd /root/xy/BplusTree/build && $(MAKE) $(MAKESILENT) -f test/CMakeFiles/hello_test.dir/build.make test/CMakeFiles/hello_test.dir/hello_test.cc.o
+	cd /root/xy/c_plusprojects/Bplus-Tree/build && $(MAKE) $(MAKESILENT) -f test/CMakeFiles/hello_test.dir/build.make test/CMakeFiles/hello_test.dir/hello_test.cc.o
 .PHONY : hello_test.cc.o
 
 hello_test.i: hello_test.cc.i
@@ -236,7 +236,7 @@ hello_test.i: hello_test.cc.i
 
 # target to preprocess a source file
 hello_test.cc.i:
-	cd /root/xy/BplusTree/build && $(MAKE) $(MAKESILENT) -f test/CMakeFiles/hello_test.dir/build.make test/CMakeFiles/hello_test.dir/hello_test.cc.i
+	cd /root/xy/c_plusprojects/Bplus-Tree/build && $(MAKE) $(MAKESILENT) -f test/CMakeFiles/hello_test.dir/build.make test/CMakeFiles/hello_test.dir/hello_test.cc.i
 .PHONY : hello_test.cc.i
 
 hello_test.s: hello_test.cc.s
@@ -244,7 +244,7 @@ hello_test.s: hello_test.cc.s
 
 # target to generate assembly for a file
 hello_test.cc.s:
-	cd /root/xy/BplusTree/build && $(MAKE) $(MAKESILENT) -f test/CMakeFiles/hello_test.dir/build.make test/CMakeFiles/hello_test.dir/hello_test.cc.s
+	cd /root/xy/c_plusprojects/Bplus-Tree/build && $(MAKE) $(MAKESILENT) -f test/CMakeFiles/hello_test.dir/build.make test/CMakeFiles/hello_test.dir/hello_test.cc.s
 .PHONY : hello_test.cc.s
 
 # Help Target
@@ -279,6 +279,6 @@ help:
 # No rule that depends on this can have commands that come from listfiles
 # because they might be regenerated.
 cmake_check_build_system:
-	cd /root/xy/BplusTree/build && $(CMAKE_COMMAND) -S$(CMAKE_SOURCE_DIR) -B$(CMAKE_BINARY_DIR) --check-build-system CMakeFiles/Makefile.cmake 0
+	cd /root/xy/c_plusprojects/Bplus-Tree/build && $(CMAKE_COMMAND) -S$(CMAKE_SOURCE_DIR) -B$(CMAKE_BINARY_DIR) --check-build-system CMakeFiles/Makefile.cmake 0
 .PHONY : cmake_check_build_system
 

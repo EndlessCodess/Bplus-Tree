@@ -1,5 +1,5 @@
-if(EXISTS "/root/xy/BplusTree/build/test/Bplus_query_test[1]_tests.cmake")
-  include("/root/xy/BplusTree/build/test/Bplus_query_test[1]_tests.cmake")
+if(EXISTS "/root/xy/c_plusprojects/Bplus-Tree/build/test/Bplus_query_test[1]_tests.cmake")
+  include("/root/xy/c_plusprojects/Bplus-Tree/build/test/Bplus_query_test[1]_tests.cmake")
 else()
   add_test(Bplus_query_test_NOT_BUILT Bplus_query_test_NOT_BUILT)
 endif()

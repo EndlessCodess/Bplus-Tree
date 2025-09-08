@@ -1,4 +1,4 @@
-# Install script for directory: /root/xy/BplusTree/test
+# Install script for directory: /root/xy/c_plusprojects/Bplus-Tree/test
 
 # Set the install prefix
 if(NOT DEFINED CMAKE_INSTALL_PREFIX)

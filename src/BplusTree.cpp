@@ -1,8 +1,10 @@
 
+
 #include "../include/BNode.h"
 #include "../include/BplusTree.h"
 #include <algorithm>
 #include <memory.h>
+#include <stdlib.h>
 
 // 寻找叶子结点
 template <typename keyType, typename valueType>

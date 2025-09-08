@@ -1,1 +1,1 @@
-/usr/bin/clang++ -g CMakeFiles/Bplus_query_test.dir/Bplus_query_test.cpp.o -o Bplus_query_test  ../lib/libgtest_main.a ../lib/libgtest.a 
+/usr/bin/c++ -g CMakeFiles/Bplus_query_test.dir/Bplus_query_test.cpp.o -o Bplus_query_test  ../lib/libgtest_main.a ../lib/libgtest.a 
