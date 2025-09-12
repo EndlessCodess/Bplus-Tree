@@ -73,15 +73,15 @@ test/CMakeFiles/hello_test.dir/hello_test.cc.o: test/CMakeFiles/hello_test.dir/f
 test/CMakeFiles/hello_test.dir/hello_test.cc.o: ../test/hello_test.cc
 test/CMakeFiles/hello_test.dir/hello_test.cc.o: test/CMakeFiles/hello_test.dir/compiler_depend.ts
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/root/xy/c_plusprojects/Bplus-Tree/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_1) "Building CXX object test/CMakeFiles/hello_test.dir/hello_test.cc.o"
-	cd /root/xy/c_plusprojects/Bplus-Tree/build/test && $(CMAKE_COMMAND) -E __run_co_compile --tidy="clang-tidy;-p;/root/xy/c_plusprojects/Bplus-Tree/build;--extra-arg-before=--driver-mode=g++" --source=/root/xy/c_plusprojects/Bplus-Tree/test/hello_test.cc -- /usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT test/CMakeFiles/hello_test.dir/hello_test.cc.o -MF CMakeFiles/hello_test.dir/hello_test.cc.o.d -o CMakeFiles/hello_test.dir/hello_test.cc.o -c /root/xy/c_plusprojects/Bplus-Tree/test/hello_test.cc
+	cd /root/xy/c_plusprojects/Bplus-Tree/build/test && $(CMAKE_COMMAND) -E __run_co_compile --tidy="clang-tidy;-p;/root/xy/c_plusprojects/Bplus-Tree/build;--extra-arg-before=--driver-mode=g++" --source=/root/xy/c_plusprojects/Bplus-Tree/test/hello_test.cc -- /usr/bin/g++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT test/CMakeFiles/hello_test.dir/hello_test.cc.o -MF CMakeFiles/hello_test.dir/hello_test.cc.o.d -o CMakeFiles/hello_test.dir/hello_test.cc.o -c /root/xy/c_plusprojects/Bplus-Tree/test/hello_test.cc
 
 test/CMakeFiles/hello_test.dir/hello_test.cc.i: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing CXX source to CMakeFiles/hello_test.dir/hello_test.cc.i"
-	cd /root/xy/c_plusprojects/Bplus-Tree/build/test && /usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /root/xy/c_plusprojects/Bplus-Tree/test/hello_test.cc > CMakeFiles/hello_test.dir/hello_test.cc.i
+	cd /root/xy/c_plusprojects/Bplus-Tree/build/test && /usr/bin/g++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /root/xy/c_plusprojects/Bplus-Tree/test/hello_test.cc > CMakeFiles/hello_test.dir/hello_test.cc.i
 
 test/CMakeFiles/hello_test.dir/hello_test.cc.s: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/hello_test.dir/hello_test.cc.s"
-	cd /root/xy/c_plusprojects/Bplus-Tree/build/test && /usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /root/xy/c_plusprojects/Bplus-Tree/test/hello_test.cc -o CMakeFiles/hello_test.dir/hello_test.cc.s
+	cd /root/xy/c_plusprojects/Bplus-Tree/build/test && /usr/bin/g++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /root/xy/c_plusprojects/Bplus-Tree/test/hello_test.cc -o CMakeFiles/hello_test.dir/hello_test.cc.s
 
 # Object files for target hello_test
 hello_test_OBJECTS = \

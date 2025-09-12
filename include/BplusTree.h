@@ -38,7 +38,7 @@ private:
   void splitInter(std::shared_ptr<InterNode<keyType, valueType>> interNode);
 
   // 分裂根结点
-  void splitRoot(std::shared_ptr<InterNode<keyType, valueType>> root);
+  void splitRoot(std::shared_ptr<Node<keyType, valueType>> root);
 
   // 分裂后更新父亲指针
   void
@@ -236,43 +236,83 @@ void BplusTree<keyType, valueType>::splitInter(
 // 分裂根结点
 template <typename keyType, typename valueType>
 void BplusTree<keyType, valueType>::splitRoot(
-    std::shared_ptr<InterNode<keyType, valueType>> root) {
+    std::shared_ptr<Node<keyType, valueType>> root) {
 
-  // 创建一个新的内部节点
-  auto newInter = std::make_shared<InterNode<keyType, valueType>>();
+  // 根节点为叶子结点
+  if (root->isLeafNode()) {
 
-  // 分开存储
-  size_t midIndex = root->keys.size() / 2;
+    auto leafRoot =
+        std::dynamic_pointer_cast<LeafNode<keyType, valueType>>(root);
+    size_t midIndex = leafRoot->keys.size() / 2;
 
-  newInter->keys =
-      std::vector<keyType>(root->keys.begin() + midIndex + 1, root->keys.end());
-  newInter->children = std::vector<std::shared_ptr<Node<keyType, valueType>>>(
-      root->children.begin() + midIndex + 1, root->children.end());
+    // 创建一个新的叶子节点
+    auto newLeaf = std::make_shared<LeafNode<keyType, valueType>>();
+    newLeaf->keys = std::vector<keyType>(leafRoot->keys.begin() + midIndex,
+                                         leafRoot->keys.end());
+    newLeaf->values = std::vector<valueType>(
+        leafRoot->values.begin() + midIndex, leafRoot->values.end());
+    leafRoot->keys.resize(midIndex);
+    leafRoot->values.resize(midIndex);
 
-  // 更新新内部节点父指针
-  for (auto &child : newInter->children) {
-    child->parent = newInter;
+    // 更新叶子节点的指针
+    newLeaf->next = leafRoot->next;
+    leafRoot->next = newLeaf;
+    newLeaf->parent = nullptr;
+    leafRoot->parent = nullptr;
+
+    // 创建新的根节点
+    auto newRoot = std::make_shared<InterNode<keyType, valueType>>();
+    newRoot->keys.push_back(newLeaf->keys.front());
+    newRoot->children.push_back(leafRoot);
+    newRoot->children.push_back(newLeaf);
+
+    // 更新子节点的父指针
+    leafRoot->parent = newRoot;
+    newLeaf->parent = newRoot;
+
+    // 更新树的根节点
+    this->root = newRoot;
   }
+  // 根节点为内部节点
+  else {
 
-  // 创建新根结点
-  auto newRoot = std::make_shared<InterNode<keyType, valueType>>();
+    auto interRoot =
+        std::dynamic_pointer_cast<InterNode<keyType, valueType>>(root);
+    size_t midIndex = interRoot->keys.size() / 2;
 
-  // 提升原节点最后一个key作为新跟节点的key
-  newRoot->keys.push_back(root->keys[midIndex]);
-  root->keys.resize(midIndex);
-  root->children.resize(midIndex + 1);
+    // 创建一个新的内部节点
+    auto newInter = std::make_shared<InterNode<keyType, valueType>>();
 
-  newRoot->children.push_back(root);
-  newRoot->children.push_back(newInter);
+    // 分开存储
+    newInter->keys = std::vector<keyType>(
+        interRoot->keys.begin() + midIndex + 1, interRoot->keys.end());
+    newInter->children = std::vector<std::shared_ptr<Node<keyType, valueType>>>(
+        interRoot->children.begin() + midIndex + 1, interRoot->children.end());
 
-  // 更新子节点父指针
-  root->parent = newRoot;
-  newInter->parent = newRoot;
+    // 更新新内部节点父指针
+    for (auto &child : newInter->children) {
+      child->parent = newInter;
+    }
 
-  // 更新树的根结点
-  this->root = newRoot;
+    // 创建新根结点
+    auto newRoot = std::make_shared<InterNode<keyType, valueType>>();
+
+    // 提升原节点最后一个key作为新跟节点的key
+    newRoot->keys.push_back(interRoot->keys[midIndex]);
+    interRoot->keys.resize(midIndex);
+    interRoot->children.resize(midIndex + 1);
+
+    newRoot->children.push_back(interRoot);
+    newRoot->children.push_back(newInter);
+
+    // 更新子节点父指针
+    interRoot->parent = newRoot;
+    newInter->parent = newRoot;
+
+    // 更新树的根结点
+    this->root = newRoot;
+  }
 }
-
 // 分裂后更新父亲指针
 template <typename keyType, typename valueType>
 void BplusTree<keyType, valueType>::updateParentPointers(
@@ -737,38 +777,84 @@ void BplusTree<keyType, valueType>::insert(const keyType &key,
 
   // 4.检查是否需要分裂
   if (targetLeaf->keys.size() > maxKeys) {
+
     std::shared_ptr<Node<keyType, valueType>> currentNode = targetLeaf;
-    while (currentNode) {
+    // 可能需要分裂
+    while (currentNode && currentNode->keys.size() > maxKeys) {
 
-      // 根结点跳出
+      // 根节点
       if (currentNode == root) {
-        break;
-      }
-      // 叶子节点分裂
-      if (currentNode->keys.size() > maxKeys && currentNode->isLeafNode()) {
-
-        splitLeaf(std::dynamic_pointer_cast<LeafNode<keyType, valueType>>(
-            currentNode));
-      }
-      // 内部节点分裂
-      else if (currentNode->keys.size() > maxKeys &&
-               !currentNode->isLeafNode()) {
-
-        splitInter(std::dynamic_pointer_cast<InterNode<keyType, valueType>>(
-            currentNode));
+        splitRoot(currentNode);
       } else {
-        break;
+        // 叶子节点
+        if (currentNode->isLeafNode()) {
+          splitLeaf(std::dynamic_pointer_cast<LeafNode<keyType, valueType>>(
+              currentNode));
+        } else {
+          // 内部节点
+          splitInter(std::dynamic_pointer_cast<InterNode<keyType, valueType>>(
+              currentNode));
+        }
+        currentNode = currentNode->parent;
       }
-
-      // 循环处理父节点
-      currentNode = currentNode->parent;
-    }
-
-    // 判断根结点是否分裂
-    if (root->keys.size() > maxKeys) {
-      splitRoot(std::dynamic_pointer_cast<InterNode<keyType, valueType>>(root));
     }
   }
+
+  // // 叶子节点
+  // if (currentNode->isLeafNode()) {
+  //   splitLeaf(std::dynamic_pointer_cast<LeafNode<keyType, valueType>>(
+  //       currentNode));
+  // } else {
+  //   // 根节点
+  //   if (currentNode == root) {
+  //     splitRoot(currentNode);
+  //   }
+  //   // 内部节点
+  //   else {
+  //     splitInter(std::dynamic_pointer_cast<InterNode<keyType,
+  //     valueType>>(
+  //         currentNode));
+  //   }
+  //   currentNode = currentNode->parent;
+  // }
+
+  // （原有逻辑） 4.检查是否需要分裂
+  //  if (targetLeaf->keys.size() > maxKeys) {
+  //    std::shared_ptr<Node<keyType, valueType>> currentNode = targetLeaf;
+  //    while (currentNode && currentNode->keys.size() > maxKeys) {
+
+  //     // 根结点跳出
+  //     if (currentNode == root) {
+  //       break;
+  //     }
+  //     // 叶子节点分裂
+  //     if (currentNode->keys.size() > maxKeys && currentNode->isLeafNode())
+  //     {
+
+  //       splitLeaf(std::dynamic_pointer_cast<LeafNode<keyType, valueType>>(
+  //           currentNode));
+  //     }
+  //     // 内部节点分裂
+  //     else if (currentNode->keys.size() > maxKeys &&
+  //              !currentNode->isLeafNode()) {
+
+  //       splitInter(std::dynamic_pointer_cast<InterNode<keyType,
+  //       valueType>>(
+  //           currentNode));
+  //     } else {
+  //       break;
+  //     }
+
+  //     // 循环处理父节点
+  //     currentNode = currentNode->parent;
+  //   }
+
+  //   // 判断根结点是否分裂
+  //   if (root->keys.size() > maxKeys) {
+  //     splitRoot(std::dynamic_pointer_cast<InterNode<keyType,
+  //     valueType>>(root));
+  //   }
+  // }
 }
 
 // 删除操作(test)

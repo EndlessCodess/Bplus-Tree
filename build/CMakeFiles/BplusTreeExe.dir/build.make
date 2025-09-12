@@ -73,15 +73,15 @@ CMakeFiles/BplusTreeExe.dir/src/main.cpp.o: CMakeFiles/BplusTreeExe.dir/flags.ma
 CMakeFiles/BplusTreeExe.dir/src/main.cpp.o: ../src/main.cpp
 CMakeFiles/BplusTreeExe.dir/src/main.cpp.o: CMakeFiles/BplusTreeExe.dir/compiler_depend.ts
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/root/xy/c_plusprojects/Bplus-Tree/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_1) "Building CXX object CMakeFiles/BplusTreeExe.dir/src/main.cpp.o"
-	$(CMAKE_COMMAND) -E __run_co_compile --tidy="clang-tidy;-p;/root/xy/c_plusprojects/Bplus-Tree/build;--extra-arg-before=--driver-mode=g++" --source=/root/xy/c_plusprojects/Bplus-Tree/src/main.cpp -- /usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT CMakeFiles/BplusTreeExe.dir/src/main.cpp.o -MF CMakeFiles/BplusTreeExe.dir/src/main.cpp.o.d -o CMakeFiles/BplusTreeExe.dir/src/main.cpp.o -c /root/xy/c_plusprojects/Bplus-Tree/src/main.cpp
+	$(CMAKE_COMMAND) -E __run_co_compile --tidy="clang-tidy;-p;/root/xy/c_plusprojects/Bplus-Tree/build;--extra-arg-before=--driver-mode=g++" --source=/root/xy/c_plusprojects/Bplus-Tree/src/main.cpp -- /usr/bin/g++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT CMakeFiles/BplusTreeExe.dir/src/main.cpp.o -MF CMakeFiles/BplusTreeExe.dir/src/main.cpp.o.d -o CMakeFiles/BplusTreeExe.dir/src/main.cpp.o -c /root/xy/c_plusprojects/Bplus-Tree/src/main.cpp
 
 CMakeFiles/BplusTreeExe.dir/src/main.cpp.i: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing CXX source to CMakeFiles/BplusTreeExe.dir/src/main.cpp.i"
-	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /root/xy/c_plusprojects/Bplus-Tree/src/main.cpp > CMakeFiles/BplusTreeExe.dir/src/main.cpp.i
+	/usr/bin/g++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /root/xy/c_plusprojects/Bplus-Tree/src/main.cpp > CMakeFiles/BplusTreeExe.dir/src/main.cpp.i
 
 CMakeFiles/BplusTreeExe.dir/src/main.cpp.s: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/BplusTreeExe.dir/src/main.cpp.s"
-	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /root/xy/c_plusprojects/Bplus-Tree/src/main.cpp -o CMakeFiles/BplusTreeExe.dir/src/main.cpp.s
+	/usr/bin/g++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /root/xy/c_plusprojects/Bplus-Tree/src/main.cpp -o CMakeFiles/BplusTreeExe.dir/src/main.cpp.s
 
 # Object files for target BplusTreeExe
 BplusTreeExe_OBJECTS = \

@@ -73,15 +73,15 @@ CMakeFiles/BplusTree.dir/src/BplusTree.cpp.o: CMakeFiles/BplusTree.dir/flags.mak
 CMakeFiles/BplusTree.dir/src/BplusTree.cpp.o: ../src/BplusTree.cpp
 CMakeFiles/BplusTree.dir/src/BplusTree.cpp.o: CMakeFiles/BplusTree.dir/compiler_depend.ts
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/root/xy/c_plusprojects/Bplus-Tree/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_1) "Building CXX object CMakeFiles/BplusTree.dir/src/BplusTree.cpp.o"
-	$(CMAKE_COMMAND) -E __run_co_compile --tidy="clang-tidy;-p;/root/xy/c_plusprojects/Bplus-Tree/build;--extra-arg-before=--driver-mode=g++" --source=/root/xy/c_plusprojects/Bplus-Tree/src/BplusTree.cpp -- /usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT CMakeFiles/BplusTree.dir/src/BplusTree.cpp.o -MF CMakeFiles/BplusTree.dir/src/BplusTree.cpp.o.d -o CMakeFiles/BplusTree.dir/src/BplusTree.cpp.o -c /root/xy/c_plusprojects/Bplus-Tree/src/BplusTree.cpp
+	$(CMAKE_COMMAND) -E __run_co_compile --tidy="clang-tidy;-p;/root/xy/c_plusprojects/Bplus-Tree/build;--extra-arg-before=--driver-mode=g++" --source=/root/xy/c_plusprojects/Bplus-Tree/src/BplusTree.cpp -- /usr/bin/g++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT CMakeFiles/BplusTree.dir/src/BplusTree.cpp.o -MF CMakeFiles/BplusTree.dir/src/BplusTree.cpp.o.d -o CMakeFiles/BplusTree.dir/src/BplusTree.cpp.o -c /root/xy/c_plusprojects/Bplus-Tree/src/BplusTree.cpp
 
 CMakeFiles/BplusTree.dir/src/BplusTree.cpp.i: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing CXX source to CMakeFiles/BplusTree.dir/src/BplusTree.cpp.i"
-	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /root/xy/c_plusprojects/Bplus-Tree/src/BplusTree.cpp > CMakeFiles/BplusTree.dir/src/BplusTree.cpp.i
+	/usr/bin/g++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /root/xy/c_plusprojects/Bplus-Tree/src/BplusTree.cpp > CMakeFiles/BplusTree.dir/src/BplusTree.cpp.i
 
 CMakeFiles/BplusTree.dir/src/BplusTree.cpp.s: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/BplusTree.dir/src/BplusTree.cpp.s"
-	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /root/xy/c_plusprojects/Bplus-Tree/src/BplusTree.cpp -o CMakeFiles/BplusTree.dir/src/BplusTree.cpp.s
+	/usr/bin/g++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /root/xy/c_plusprojects/Bplus-Tree/src/BplusTree.cpp -o CMakeFiles/BplusTree.dir/src/BplusTree.cpp.s
 
 # Object files for target BplusTree
 BplusTree_OBJECTS = \

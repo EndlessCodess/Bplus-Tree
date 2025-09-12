@@ -73,15 +73,15 @@ test/CMakeFiles/Bplus_query_test.dir/Bplus_query_test.cpp.o: test/CMakeFiles/Bpl
 test/CMakeFiles/Bplus_query_test.dir/Bplus_query_test.cpp.o: ../test/Bplus_query_test.cpp
 test/CMakeFiles/Bplus_query_test.dir/Bplus_query_test.cpp.o: test/CMakeFiles/Bplus_query_test.dir/compiler_depend.ts
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/root/xy/c_plusprojects/Bplus-Tree/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_1) "Building CXX object test/CMakeFiles/Bplus_query_test.dir/Bplus_query_test.cpp.o"
-	cd /root/xy/c_plusprojects/Bplus-Tree/build/test && $(CMAKE_COMMAND) -E __run_co_compile --tidy="clang-tidy;-p;/root/xy/c_plusprojects/Bplus-Tree/build;--extra-arg-before=--driver-mode=g++" --source=/root/xy/c_plusprojects/Bplus-Tree/test/Bplus_query_test.cpp -- /usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT test/CMakeFiles/Bplus_query_test.dir/Bplus_query_test.cpp.o -MF CMakeFiles/Bplus_query_test.dir/Bplus_query_test.cpp.o.d -o CMakeFiles/Bplus_query_test.dir/Bplus_query_test.cpp.o -c /root/xy/c_plusprojects/Bplus-Tree/test/Bplus_query_test.cpp
+	cd /root/xy/c_plusprojects/Bplus-Tree/build/test && $(CMAKE_COMMAND) -E __run_co_compile --tidy="clang-tidy;-p;/root/xy/c_plusprojects/Bplus-Tree/build;--extra-arg-before=--driver-mode=g++" --source=/root/xy/c_plusprojects/Bplus-Tree/test/Bplus_query_test.cpp -- /usr/bin/g++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT test/CMakeFiles/Bplus_query_test.dir/Bplus_query_test.cpp.o -MF CMakeFiles/Bplus_query_test.dir/Bplus_query_test.cpp.o.d -o CMakeFiles/Bplus_query_test.dir/Bplus_query_test.cpp.o -c /root/xy/c_plusprojects/Bplus-Tree/test/Bplus_query_test.cpp
 
 test/CMakeFiles/Bplus_query_test.dir/Bplus_query_test.cpp.i: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing CXX source to CMakeFiles/Bplus_query_test.dir/Bplus_query_test.cpp.i"
-	cd /root/xy/c_plusprojects/Bplus-Tree/build/test && /usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /root/xy/c_plusprojects/Bplus-Tree/test/Bplus_query_test.cpp > CMakeFiles/Bplus_query_test.dir/Bplus_query_test.cpp.i
+	cd /root/xy/c_plusprojects/Bplus-Tree/build/test && /usr/bin/g++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /root/xy/c_plusprojects/Bplus-Tree/test/Bplus_query_test.cpp > CMakeFiles/Bplus_query_test.dir/Bplus_query_test.cpp.i
 
 test/CMakeFiles/Bplus_query_test.dir/Bplus_query_test.cpp.s: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/Bplus_query_test.dir/Bplus_query_test.cpp.s"
-	cd /root/xy/c_plusprojects/Bplus-Tree/build/test && /usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /root/xy/c_plusprojects/Bplus-Tree/test/Bplus_query_test.cpp -o CMakeFiles/Bplus_query_test.dir/Bplus_query_test.cpp.s
+	cd /root/xy/c_plusprojects/Bplus-Tree/build/test && /usr/bin/g++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /root/xy/c_plusprojects/Bplus-Tree/test/Bplus_query_test.cpp -o CMakeFiles/Bplus_query_test.dir/Bplus_query_test.cpp.s
 
 # Object files for target Bplus_query_test
 Bplus_query_test_OBJECTS = \
