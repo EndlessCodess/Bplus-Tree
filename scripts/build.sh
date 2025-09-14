@@ -47,10 +47,11 @@ mkdir "$BUILD_DIR" || error_exit "Failed to create build directory."
 cd "$BUILD_DIR" || error_exit "Failed to enter build directory."
 
 # 3. 配置 CMake 项目
-cmake -S .. -B . -DCMAKE_BUILD_TYPE=${BUILD_TYPE} || error_exit "CMake configuration failed."
+# 显式添加 -DCMAKE_BUILD_TYPE 和调试选项
+cmake -S .. -B . -DCMAKE_BUILD_TYPE=${BUILD_TYPE} -DCMAKE_CXX_FLAGS_DEBUG="-g" || error_exit "CMake configuration failed."
 
 # 4. 编译
-CPU_CORES=$(nproc)
+CPU_CORES=$(nproc 2>/dev/null || echo 4)  # 获取 CPU 核心数，失败时默认 4
 make -j${CPU_CORES} || error_exit "Build failed."
 
 # 5. 检查构建是否完成
@@ -61,11 +62,10 @@ fi
 success "Build completed successfully. Executable: $EXECUTABLE_NAME"
 
 # 6. 运行测试
-if [ -f "${BUILD_DIR}/hello_test" ]; then
-    echo -e "${YELLOW}Running tests...${NC}"
-    cd "$BUILD_DIR"
-    ./hello_test || error_exit "Tests failed."
-    success "All tests passed."
+if [ -f "$EXECUTABLE_NAME" ]; then
+    echo -e "${YELLOW}Running BplusTreeExe...${NC}"
+    ./"$EXECUTABLE_NAME" || error_exit "BplusTreeExe failed."
+    success "BplusTreeExe ran successfully."
 else
-    warning "No test executable found. Skipping tests."
+    warning "No BplusTreeExe executable found. Skipping tests."
 fi

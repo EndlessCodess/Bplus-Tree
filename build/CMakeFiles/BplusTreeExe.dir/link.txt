@@ -1,1 +1,1 @@
-/usr/bin/g++ -g CMakeFiles/BplusTreeExe.dir/src/main.cpp.o -o ../bin/Debug/BplusTreeExe 
+/usr/bin/c++ -g -g -O0 CMakeFiles/BplusTreeExe.dir/test/test2.cpp.o -o ../bin/Debug/BplusTreeExe 

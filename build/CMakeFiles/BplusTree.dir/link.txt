@@ -1,2 +1,0 @@
-/usr/bin/ar qc ../lib/libBplusTree.a CMakeFiles/BplusTree.dir/src/BplusTree.cpp.o
-/usr/bin/ranlib ../lib/libBplusTree.a

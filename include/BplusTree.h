@@ -125,6 +125,11 @@ public:
 
   // 统计节点数量
   size_t countNode() const;
+
+  // 获取root
+  inline std::shared_ptr<Node<keyType, valueType>> getRoot() const {
+    return root;
+  }
 };
 
 // 寻找叶子结点
@@ -161,24 +166,26 @@ BplusTree<keyType, valueType>::findLeaf(
 
 // 插入叶子结点
 template <typename keyType, typename valueType>
-void BplusTree<keyType, valueType>::insertInLeaf(
+inline void BplusTree<keyType, valueType>::insertInLeaf(
     std::shared_ptr<LeafNode<keyType, valueType>> targetLeaf,
     const keyType &key, const valueType &value) {
 
   // 查找插入位置
+  // std::cout << "keys.size(): " << targetLeaf->keys.size()
+  //          << ", values.size(): " << targetLeaf->values.size() << "\n";
   auto it =
       std::lower_bound(targetLeaf->keys.begin(), targetLeaf->keys.end(), key);
+  size_t pos = std::distance(targetLeaf->keys.begin(), it);
+  // std::cout << "Insert position: " << pos << "\n";
 
   // 插入新的键值对
   targetLeaf->keys.insert(it, key);
-  targetLeaf->values.insert(targetLeaf->values.begin() +
-                                std::distance(targetLeaf->keys.begin(), it),
-                            value);
+  targetLeaf->values.insert(targetLeaf->values.begin() + pos, value);
 }
 
 // 分裂叶子
 template <typename keyType, typename valueType>
-void BplusTree<keyType, valueType>::splitLeaf(
+inline void BplusTree<keyType, valueType>::splitLeaf(
     std::shared_ptr<LeafNode<keyType, valueType>> leafNode) {
 
   size_t midIndex = leafNode->keys.size() / 2;
@@ -206,10 +213,11 @@ void BplusTree<keyType, valueType>::splitLeaf(
 
 // 分裂内部
 template <typename keyType, typename valueType>
-void BplusTree<keyType, valueType>::splitInter(
+inline void BplusTree<keyType, valueType>::splitInter(
     std::shared_ptr<InterNode<keyType, valueType>> interNode) {
 
   size_t midIndex = interNode->keys.size() / 2;
+  keyType midKey = interNode->keys[midIndex];
 
   // 分开存储
   auto newInter = std::make_shared<InterNode<keyType, valueType>>();
@@ -230,12 +238,12 @@ void BplusTree<keyType, valueType>::splitInter(
   std::shared_ptr<InterNode<keyType, valueType>> parent =
       std::dynamic_pointer_cast<InterNode<keyType, valueType>>(
           interNode->parent);
-  updateParentPointers(parent, newInter, newInter->keys.front());
+  updateParentPointers(parent, newInter, midKey);
 }
 
 // 分裂根结点
 template <typename keyType, typename valueType>
-void BplusTree<keyType, valueType>::splitRoot(
+inline void BplusTree<keyType, valueType>::splitRoot(
     std::shared_ptr<Node<keyType, valueType>> root) {
 
   // 根节点为叶子结点
@@ -315,22 +323,22 @@ void BplusTree<keyType, valueType>::splitRoot(
 }
 // 分裂后更新父亲指针
 template <typename keyType, typename valueType>
-void BplusTree<keyType, valueType>::updateParentPointers(
+inline void BplusTree<keyType, valueType>::updateParentPointers(
     std::shared_ptr<InterNode<keyType, valueType>> parent,
     std::shared_ptr<Node<keyType, valueType>> newNode, const keyType &key) {
 
   // 查找插入位置
   auto it = std::lower_bound(parent->keys.begin(), parent->keys.end(), key);
+  auto index = std::distance(parent->keys.begin(), it);
   parent->keys.insert(it, key);
 
   // 更改孩子指针
-  auto index = std::distance(parent->keys.begin(), it);
   parent->children.insert(parent->children.begin() + index + 1, newNode);
 }
 
 // 删除后调整操作(改为通用)
 template <typename keyType, typename valueType>
-bool BplusTree<keyType, valueType>::adjust(
+inline bool BplusTree<keyType, valueType>::adjust(
     std::shared_ptr<Node<keyType, valueType>> node,
     std::shared_ptr<InterNode<keyType, valueType>> parent) {
 
@@ -367,7 +375,7 @@ bool BplusTree<keyType, valueType>::adjust(
 
 // 找左兄弟
 template <typename keyType, typename valueType>
-std::shared_ptr<Node<keyType, valueType>>
+inline std::shared_ptr<Node<keyType, valueType>>
 BplusTree<keyType, valueType>::getLeftSibling(
     std::shared_ptr<Node<keyType, valueType>> node) {
 
@@ -387,7 +395,7 @@ BplusTree<keyType, valueType>::getLeftSibling(
 
 // 找右兄弟
 template <typename keyType, typename valueType>
-std::shared_ptr<Node<keyType, valueType>>
+inline std::shared_ptr<Node<keyType, valueType>>
 BplusTree<keyType, valueType>::getRightSibling(
     std::shared_ptr<Node<keyType, valueType>> node) {
   if (node->parent) {
@@ -406,7 +414,7 @@ BplusTree<keyType, valueType>::getRightSibling(
 
 // 从左兄弟借
 template <typename keyType, typename valueType>
-void BplusTree<keyType, valueType>::borrowFromL(
+inline void BplusTree<keyType, valueType>::borrowFromL(
     std::shared_ptr<Node<keyType, valueType>> node,
     std::shared_ptr<Node<keyType, valueType>> leftSibling,
     std::shared_ptr<InterNode<keyType, valueType>> parent) {
@@ -471,7 +479,7 @@ void BplusTree<keyType, valueType>::borrowFromL(
 
 // 从右兄弟借
 template <typename keyType, typename valueType>
-void BplusTree<keyType, valueType>::borrowFromR(
+inline void BplusTree<keyType, valueType>::borrowFromR(
     std::shared_ptr<Node<keyType, valueType>> node,
     std::shared_ptr<Node<keyType, valueType>> rightSibling,
     std::shared_ptr<InterNode<keyType, valueType>> parent) {
@@ -532,7 +540,7 @@ void BplusTree<keyType, valueType>::borrowFromR(
 
 // 找左兄弟合并(合并到左)
 template <typename keyType, typename valueType>
-void BplusTree<keyType, valueType>::mergeWithL(
+inline void BplusTree<keyType, valueType>::mergeWithL(
     std::shared_ptr<Node<keyType, valueType>> node,
     std::shared_ptr<Node<keyType, valueType>> leftSibling,
     std::shared_ptr<InterNode<keyType, valueType>> parent) {
@@ -591,7 +599,7 @@ void BplusTree<keyType, valueType>::mergeWithL(
 
 // 找右兄弟合并(合并到右)
 template <typename keyType, typename valueType>
-void BplusTree<keyType, valueType>::mergeWithR(
+inline void BplusTree<keyType, valueType>::mergeWithR(
     std::shared_ptr<Node<keyType, valueType>> node,
     std::shared_ptr<Node<keyType, valueType>> rightSibling,
     std::shared_ptr<InterNode<keyType, valueType>> parent) {
@@ -653,7 +661,7 @@ void BplusTree<keyType, valueType>::mergeWithR(
 
 // 合并后调整父节点
 template <typename keyType, typename valueType>
-void BplusTree<keyType, valueType>::adjustFather(
+inline void BplusTree<keyType, valueType>::adjustFather(
     std::shared_ptr<InterNode<keyType, valueType>> currentNode) {
 
   // 判断是否高度减少
@@ -675,7 +683,7 @@ void BplusTree<keyType, valueType>::adjustFather(
 
 // 打印单一节点
 template <typename keyType, typename valueType>
-void BplusTree<keyType, valueType>::printNode(
+inline void BplusTree<keyType, valueType>::printNode(
     const std::shared_ptr<Node<keyType, valueType>> &node, int depth) const {
   if (!node)
     return;
@@ -759,8 +767,8 @@ void BplusTree<keyType, valueType>::printNode(
 // 外部接口
 // 插入操作(test)
 template <typename keyType, typename valueType>
-void BplusTree<keyType, valueType>::insert(const keyType &key,
-                                           const valueType &value) {
+inline void BplusTree<keyType, valueType>::insert(const keyType &key,
+                                                  const valueType &value) {
 
   // 1.判断是否为空
   if (!root) {
@@ -859,7 +867,7 @@ void BplusTree<keyType, valueType>::insert(const keyType &key,
 
 // 删除操作(test)
 template <typename keyType, typename valueType>
-bool BplusTree<keyType, valueType>::remove(const keyType &key) {
+inline bool BplusTree<keyType, valueType>::remove(const keyType &key) {
   // 1.寻找目标叶子结点
   auto targetLeaf = findLeaf(root, key);
   if (!targetLeaf) {
@@ -897,7 +905,8 @@ bool BplusTree<keyType, valueType>::remove(const keyType &key) {
 
 // 单一查询(test)
 template <typename keyType, typename valueType>
-valueType BplusTree<keyType, valueType>::search(const keyType &key) const {
+inline valueType
+BplusTree<keyType, valueType>::search(const keyType &key) const {
 
   // 获取叶子结点
   auto targetLeaf = findLeaf(root, key);
@@ -922,7 +931,7 @@ valueType BplusTree<keyType, valueType>::search(const keyType &key) const {
 
 // 范围查询(test)
 template <typename keyType, typename valueType>
-std::vector<std::pair<keyType, valueType>>
+inline std::vector<std::pair<keyType, valueType>>
 BplusTree<keyType, valueType>::rangeSearch(const keyType &startKey,
                                            const keyType &endKey) const {
 
@@ -974,7 +983,7 @@ BplusTree<keyType, valueType>::rangeSearch(const keyType &startKey,
 
 // 中序遍历
 template <typename keyType, typename valueType>
-void BplusTree<keyType, valueType>::inorderTraversal() const {
+inline void BplusTree<keyType, valueType>::inorderTraversal() const {
   // 获取头节点
   std::shared_ptr<Node<keyType, valueType>> currentNode = root;
   while (currentNode && !currentNode->isLeafNode()) {
@@ -986,9 +995,14 @@ void BplusTree<keyType, valueType>::inorderTraversal() const {
   // 遍历叶子结点
   auto leaf =
       std::dynamic_pointer_cast<LeafNode<keyType, valueType>>(currentNode);
+  size_t count = 0;
   while (leaf) {
     for (size_t i = 0; i < leaf->keys.size(); ++i) {
       std::cout << leaf->keys[i] << ":" << leaf->values[i] << " ";
+      if (count % 10 == 9) {
+        std::cout << "\n" << "                   ";
+      }
+      ++count;
     }
     leaf = leaf->next;
   }
@@ -998,7 +1012,7 @@ void BplusTree<keyType, valueType>::inorderTraversal() const {
 
 // 打印B+树
 template <typename keyType, typename valueType>
-void BplusTree<keyType, valueType>::printBplusTree(
+inline void BplusTree<keyType, valueType>::printBplusTree(
     std::shared_ptr<Node<keyType, valueType>> node, const int level) const {
 
   // 判断树是否为空
@@ -1007,7 +1021,7 @@ void BplusTree<keyType, valueType>::printBplusTree(
   }
 
   for (int i = 0; i < level; ++i) {
-    std::cout << " ";
+    std::cout << "-";
   }
 
   // 先打印当前节点的key
@@ -1036,7 +1050,7 @@ void BplusTree<keyType, valueType>::printBplusTree(
 
 // 获取树高
 template <typename keyType, typename valueType>
-int BplusTree<keyType, valueType>::getTreeHeight(
+inline int BplusTree<keyType, valueType>::getTreeHeight(
     std::shared_ptr<Node<keyType, valueType>> node) const {
   if (!node) {
     return 0;
@@ -1055,7 +1069,7 @@ int BplusTree<keyType, valueType>::getTreeHeight(
 
 // 统计节点数量
 template <typename keyType, typename valueType>
-size_t BplusTree<keyType, valueType>::countNode() const {
+inline size_t BplusTree<keyType, valueType>::countNode() const {
 
   // 如果树为空，返回0
   if (!root) {

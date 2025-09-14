@@ -73,15 +73,15 @@ third_party/googletest/googlemock/CMakeFiles/gmock_main.dir/src/gmock_main.cc.o:
 third_party/googletest/googlemock/CMakeFiles/gmock_main.dir/src/gmock_main.cc.o: ../third_party/googletest/googlemock/src/gmock_main.cc
 third_party/googletest/googlemock/CMakeFiles/gmock_main.dir/src/gmock_main.cc.o: third_party/googletest/googlemock/CMakeFiles/gmock_main.dir/compiler_depend.ts
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/root/xy/c_plusprojects/Bplus-Tree/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_1) "Building CXX object third_party/googletest/googlemock/CMakeFiles/gmock_main.dir/src/gmock_main.cc.o"
-	cd /root/xy/c_plusprojects/Bplus-Tree/build/third_party/googletest/googlemock && $(CMAKE_COMMAND) -E __run_co_compile --tidy="clang-tidy;-p;/root/xy/c_plusprojects/Bplus-Tree/build;--extra-arg-before=--driver-mode=g++" --source=/root/xy/c_plusprojects/Bplus-Tree/third_party/googletest/googlemock/src/gmock_main.cc -- /usr/bin/g++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT third_party/googletest/googlemock/CMakeFiles/gmock_main.dir/src/gmock_main.cc.o -MF CMakeFiles/gmock_main.dir/src/gmock_main.cc.o.d -o CMakeFiles/gmock_main.dir/src/gmock_main.cc.o -c /root/xy/c_plusprojects/Bplus-Tree/third_party/googletest/googlemock/src/gmock_main.cc
+	cd /root/xy/c_plusprojects/Bplus-Tree/build/third_party/googletest/googlemock && /usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT third_party/googletest/googlemock/CMakeFiles/gmock_main.dir/src/gmock_main.cc.o -MF CMakeFiles/gmock_main.dir/src/gmock_main.cc.o.d -o CMakeFiles/gmock_main.dir/src/gmock_main.cc.o -c /root/xy/c_plusprojects/Bplus-Tree/third_party/googletest/googlemock/src/gmock_main.cc
 
 third_party/googletest/googlemock/CMakeFiles/gmock_main.dir/src/gmock_main.cc.i: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing CXX source to CMakeFiles/gmock_main.dir/src/gmock_main.cc.i"
-	cd /root/xy/c_plusprojects/Bplus-Tree/build/third_party/googletest/googlemock && /usr/bin/g++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /root/xy/c_plusprojects/Bplus-Tree/third_party/googletest/googlemock/src/gmock_main.cc > CMakeFiles/gmock_main.dir/src/gmock_main.cc.i
+	cd /root/xy/c_plusprojects/Bplus-Tree/build/third_party/googletest/googlemock && /usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /root/xy/c_plusprojects/Bplus-Tree/third_party/googletest/googlemock/src/gmock_main.cc > CMakeFiles/gmock_main.dir/src/gmock_main.cc.i
 
 third_party/googletest/googlemock/CMakeFiles/gmock_main.dir/src/gmock_main.cc.s: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/gmock_main.dir/src/gmock_main.cc.s"
-	cd /root/xy/c_plusprojects/Bplus-Tree/build/third_party/googletest/googlemock && /usr/bin/g++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /root/xy/c_plusprojects/Bplus-Tree/third_party/googletest/googlemock/src/gmock_main.cc -o CMakeFiles/gmock_main.dir/src/gmock_main.cc.s
+	cd /root/xy/c_plusprojects/Bplus-Tree/build/third_party/googletest/googlemock && /usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /root/xy/c_plusprojects/Bplus-Tree/third_party/googletest/googlemock/src/gmock_main.cc -o CMakeFiles/gmock_main.dir/src/gmock_main.cc.s
 
 # Object files for target gmock_main
 gmock_main_OBJECTS = \

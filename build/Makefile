@@ -172,19 +172,6 @@ depend:
 .PHONY : depend
 
 #=============================================================================
-# Target rules for targets named BplusTree
-
-# Build rule for target.
-BplusTree: cmake_check_build_system
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 BplusTree
-.PHONY : BplusTree
-
-# fast build rule for target.
-BplusTree/fast:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/BplusTree.dir/build.make CMakeFiles/BplusTree.dir/build
-.PHONY : BplusTree/fast
-
-#=============================================================================
 # Target rules for targets named BplusTreeExe
 
 # Build rule for target.
@@ -262,79 +249,29 @@ gtest_main/fast:
 	$(MAKE) $(MAKESILENT) -f third_party/googletest/googletest/CMakeFiles/gtest_main.dir/build.make third_party/googletest/googletest/CMakeFiles/gtest_main.dir/build
 .PHONY : gtest_main/fast
 
-#=============================================================================
-# Target rules for targets named hello_test
-
-# Build rule for target.
-hello_test: cmake_check_build_system
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 hello_test
-.PHONY : hello_test
-
-# fast build rule for target.
-hello_test/fast:
-	$(MAKE) $(MAKESILENT) -f test/CMakeFiles/hello_test.dir/build.make test/CMakeFiles/hello_test.dir/build
-.PHONY : hello_test/fast
-
-#=============================================================================
-# Target rules for targets named Bplus_query_test
-
-# Build rule for target.
-Bplus_query_test: cmake_check_build_system
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 Bplus_query_test
-.PHONY : Bplus_query_test
-
-# fast build rule for target.
-Bplus_query_test/fast:
-	$(MAKE) $(MAKESILENT) -f test/CMakeFiles/Bplus_query_test.dir/build.make test/CMakeFiles/Bplus_query_test.dir/build
-.PHONY : Bplus_query_test/fast
-
-src/BplusTree.o: src/BplusTree.cpp.o
-.PHONY : src/BplusTree.o
+test/test2.o: test/test2.cpp.o
+.PHONY : test/test2.o
 
 # target to build an object file
-src/BplusTree.cpp.o:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/BplusTree.dir/build.make CMakeFiles/BplusTree.dir/src/BplusTree.cpp.o
-.PHONY : src/BplusTree.cpp.o
+test/test2.cpp.o:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/BplusTreeExe.dir/build.make CMakeFiles/BplusTreeExe.dir/test/test2.cpp.o
+.PHONY : test/test2.cpp.o
 
-src/BplusTree.i: src/BplusTree.cpp.i
-.PHONY : src/BplusTree.i
-
-# target to preprocess a source file
-src/BplusTree.cpp.i:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/BplusTree.dir/build.make CMakeFiles/BplusTree.dir/src/BplusTree.cpp.i
-.PHONY : src/BplusTree.cpp.i
-
-src/BplusTree.s: src/BplusTree.cpp.s
-.PHONY : src/BplusTree.s
-
-# target to generate assembly for a file
-src/BplusTree.cpp.s:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/BplusTree.dir/build.make CMakeFiles/BplusTree.dir/src/BplusTree.cpp.s
-.PHONY : src/BplusTree.cpp.s
-
-src/main.o: src/main.cpp.o
-.PHONY : src/main.o
-
-# target to build an object file
-src/main.cpp.o:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/BplusTreeExe.dir/build.make CMakeFiles/BplusTreeExe.dir/src/main.cpp.o
-.PHONY : src/main.cpp.o
-
-src/main.i: src/main.cpp.i
-.PHONY : src/main.i
+test/test2.i: test/test2.cpp.i
+.PHONY : test/test2.i
 
 # target to preprocess a source file
-src/main.cpp.i:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/BplusTreeExe.dir/build.make CMakeFiles/BplusTreeExe.dir/src/main.cpp.i
-.PHONY : src/main.cpp.i
+test/test2.cpp.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/BplusTreeExe.dir/build.make CMakeFiles/BplusTreeExe.dir/test/test2.cpp.i
+.PHONY : test/test2.cpp.i
 
-src/main.s: src/main.cpp.s
-.PHONY : src/main.s
+test/test2.s: test/test2.cpp.s
+.PHONY : test/test2.s
 
 # target to generate assembly for a file
-src/main.cpp.s:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/BplusTreeExe.dir/build.make CMakeFiles/BplusTreeExe.dir/src/main.cpp.s
-.PHONY : src/main.cpp.s
+test/test2.cpp.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/BplusTreeExe.dir/build.make CMakeFiles/BplusTreeExe.dir/test/test2.cpp.s
+.PHONY : test/test2.cpp.s
 
 # Help Target
 help:
@@ -350,20 +287,14 @@ help:
 	@echo "... rebuild_cache"
 	@echo "... test"
 	@echo "... run_clang_tidy"
-	@echo "... BplusTree"
 	@echo "... BplusTreeExe"
-	@echo "... Bplus_query_test"
 	@echo "... gmock"
 	@echo "... gmock_main"
 	@echo "... gtest"
 	@echo "... gtest_main"
-	@echo "... hello_test"
-	@echo "... src/BplusTree.o"
-	@echo "... src/BplusTree.i"
-	@echo "... src/BplusTree.s"
-	@echo "... src/main.o"
-	@echo "... src/main.i"
-	@echo "... src/main.s"
+	@echo "... test/test2.o"
+	@echo "... test/test2.i"
+	@echo "... test/test2.s"
 .PHONY : help
 
 

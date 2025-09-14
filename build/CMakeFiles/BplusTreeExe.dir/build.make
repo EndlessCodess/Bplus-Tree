@@ -69,28 +69,28 @@ include CMakeFiles/BplusTreeExe.dir/progress.make
 # Include the compile flags for this target's objects.
 include CMakeFiles/BplusTreeExe.dir/flags.make
 
-CMakeFiles/BplusTreeExe.dir/src/main.cpp.o: CMakeFiles/BplusTreeExe.dir/flags.make
-CMakeFiles/BplusTreeExe.dir/src/main.cpp.o: ../src/main.cpp
-CMakeFiles/BplusTreeExe.dir/src/main.cpp.o: CMakeFiles/BplusTreeExe.dir/compiler_depend.ts
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/root/xy/c_plusprojects/Bplus-Tree/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_1) "Building CXX object CMakeFiles/BplusTreeExe.dir/src/main.cpp.o"
-	$(CMAKE_COMMAND) -E __run_co_compile --tidy="clang-tidy;-p;/root/xy/c_plusprojects/Bplus-Tree/build;--extra-arg-before=--driver-mode=g++" --source=/root/xy/c_plusprojects/Bplus-Tree/src/main.cpp -- /usr/bin/g++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT CMakeFiles/BplusTreeExe.dir/src/main.cpp.o -MF CMakeFiles/BplusTreeExe.dir/src/main.cpp.o.d -o CMakeFiles/BplusTreeExe.dir/src/main.cpp.o -c /root/xy/c_plusprojects/Bplus-Tree/src/main.cpp
+CMakeFiles/BplusTreeExe.dir/test/test2.cpp.o: CMakeFiles/BplusTreeExe.dir/flags.make
+CMakeFiles/BplusTreeExe.dir/test/test2.cpp.o: ../test/test2.cpp
+CMakeFiles/BplusTreeExe.dir/test/test2.cpp.o: CMakeFiles/BplusTreeExe.dir/compiler_depend.ts
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/root/xy/c_plusprojects/Bplus-Tree/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_1) "Building CXX object CMakeFiles/BplusTreeExe.dir/test/test2.cpp.o"
+	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT CMakeFiles/BplusTreeExe.dir/test/test2.cpp.o -MF CMakeFiles/BplusTreeExe.dir/test/test2.cpp.o.d -o CMakeFiles/BplusTreeExe.dir/test/test2.cpp.o -c /root/xy/c_plusprojects/Bplus-Tree/test/test2.cpp
 
-CMakeFiles/BplusTreeExe.dir/src/main.cpp.i: cmake_force
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing CXX source to CMakeFiles/BplusTreeExe.dir/src/main.cpp.i"
-	/usr/bin/g++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /root/xy/c_plusprojects/Bplus-Tree/src/main.cpp > CMakeFiles/BplusTreeExe.dir/src/main.cpp.i
+CMakeFiles/BplusTreeExe.dir/test/test2.cpp.i: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing CXX source to CMakeFiles/BplusTreeExe.dir/test/test2.cpp.i"
+	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /root/xy/c_plusprojects/Bplus-Tree/test/test2.cpp > CMakeFiles/BplusTreeExe.dir/test/test2.cpp.i
 
-CMakeFiles/BplusTreeExe.dir/src/main.cpp.s: cmake_force
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/BplusTreeExe.dir/src/main.cpp.s"
-	/usr/bin/g++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /root/xy/c_plusprojects/Bplus-Tree/src/main.cpp -o CMakeFiles/BplusTreeExe.dir/src/main.cpp.s
+CMakeFiles/BplusTreeExe.dir/test/test2.cpp.s: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/BplusTreeExe.dir/test/test2.cpp.s"
+	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /root/xy/c_plusprojects/Bplus-Tree/test/test2.cpp -o CMakeFiles/BplusTreeExe.dir/test/test2.cpp.s
 
 # Object files for target BplusTreeExe
 BplusTreeExe_OBJECTS = \
-"CMakeFiles/BplusTreeExe.dir/src/main.cpp.o"
+"CMakeFiles/BplusTreeExe.dir/test/test2.cpp.o"
 
 # External object files for target BplusTreeExe
 BplusTreeExe_EXTERNAL_OBJECTS =
 
-../bin/Debug/BplusTreeExe: CMakeFiles/BplusTreeExe.dir/src/main.cpp.o
+../bin/Debug/BplusTreeExe: CMakeFiles/BplusTreeExe.dir/test/test2.cpp.o
 ../bin/Debug/BplusTreeExe: CMakeFiles/BplusTreeExe.dir/build.make
 ../bin/Debug/BplusTreeExe: CMakeFiles/BplusTreeExe.dir/link.txt
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --bold --progress-dir=/root/xy/c_plusprojects/Bplus-Tree/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_2) "Linking CXX executable ../bin/Debug/BplusTreeExe"

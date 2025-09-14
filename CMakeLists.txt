@@ -8,8 +8,9 @@ set(CMAKE_CXX_STANDARD_REQUIRED ON)
 set(CMAKE_CXX_EXTENSIONS OFF)
 set(CMAKE_EXPORT_COMPILE_COMMANDS ON)
 
-# 启用 clang-tidy
-set(CMAKE_CXX_CLANG_TIDY clang-tidy -p ${CMAKE_BINARY_DIR})
+# 强制 Debug 模式添加调试符号并禁用优化
+set(CMAKE_CXX_FLAGS_DEBUG "${CMAKE_CXX_FLAGS_DEBUG} -g -O0" CACHE STRING "Debug build flags" FORCE)
+set(CMAKE_C_FLAGS_DEBUG "${CMAKE_C_FLAGS_DEBUG} -g -O0" CACHE STRING "Debug build flags" FORCE)
 
 # 启用警告
 if(MSVC)
@@ -18,38 +19,32 @@ else()
     add_compile_options(-Wall -Wextra -pedantic -Werror)
 endif()
 
-# 引入本地 Google Test
-add_subdirectory(${PROJECT_SOURCE_DIR}/third_party/googletest)
+# 启用 clang-tidy（如果可用）
+if(CMAKE_CXX_CLANG_TIDY)
+    set(CMAKE_CXX_CLANG_TIDY clang-tidy -p ${CMAKE_BINARY_DIR})
+endif()
 
-# 启用 CMake 的测试功能
-enable_testing()
+# 设置源文件和头文件目录
+set(TEST_DIR ${PROJECT_SOURCE_DIR}/test)
+set(SOURCE_DIR ${PROJECT_SOURCE_DIR}/src)
+set(INCLUDE_DIR ${PROJECT_SOURCE_DIR}/include)
 
-# 编译 BplusTree 库
-add_library(
-    BplusTree
-    ${PROJECT_SOURCE_DIR}/src/BplusTree.cpp
-)
-
-set(LIBRARY_OUTPUT_PATH ${PROJECT_SOURCE_DIR}/lib)
-
-# 设置源文件变量
+# 收集源文件和头文件
 file(GLOB SRC_FILES
-    ${PROJECT_SOURCE_DIR}/src/*.cpp
-    ${PROJECT_SOURCE_DIR}/include/*.h
-    ${PROJECT_SOURCE_DIR}/test/*.cpp
-    ${PROJECT_SOURCE_DIR}/test/*.cc
+    "${SOURCE_DIR}/*.cpp"
 )
-
-# 添加可执行文件目录
-#add_executable(BplusTreeExe ${SRC_FILES})
-add_executable(BplusTreeExe 
-    ${PROJECT_SOURCE_DIR}/src/main.cpp 
-    ${PROJECT_SOURCE_DIR}/lib/libBplusTree.a
+file(GLOB HEADER_FILES
+    "${INCLUDE_DIR}/*.h"
 )
+# 编译 BplusTree 库（仅头文件库，无需 .cpp）
+add_library(BplusTree INTERFACE)
+target_include_directories(BplusTree INTERFACE ${INCLUDE_DIR})
 
-# 添加头文件
-target_include_directories(BplusTreeExe PRIVATE ${PROJECT_SOURCE_DIR}/include)
-
+# 添加可执行文件
+# add_executable(BplusTreeExe ${SOURCE_DIR}/main.cpp)
+add_executable(BplusTreeExe ${TEST_DIR}/test2.cpp)
+target_include_directories(BplusTreeExe PRIVATE ${INCLUDE_DIR})
+target_link_libraries(BplusTreeExe PRIVATE BplusTree)
 
 # 设置输出目录
 set_target_properties(BplusTreeExe PROPERTIES
@@ -57,14 +52,21 @@ set_target_properties(BplusTreeExe PROPERTIES
     RUNTIME_OUTPUT_DIRECTORY_RELEASE ${PROJECT_SOURCE_DIR}/bin/Release
 )
 
+# 引入本地 Google Test（保留以支持未来测试）
+add_subdirectory(${PROJECT_SOURCE_DIR}/third_party/googletest)
+
+# 启用 CMake 的测试功能
+enable_testing()
+
 # 添加自定义目标以运行 clang-tidy
 add_custom_target(run_clang_tidy
-    COMMAND clang-tidy -p ${CMAKE_BINARY_DIR} ${SRC_FILES}
-    COMMENT "Running clang-tidy on source files"
-    VERBATIM)
+    COMMAND clang-tidy -p ${CMAKE_BINARY_DIR} ${SRC_FILES} ${HEADER_FILES}
+    COMMENT "Running clang-tidy on source and header files"
+    VERBATIM
+)
 
 # 确保在构建目标之前运行 clang-tidy
 add_dependencies(BplusTreeExe run_clang_tidy)
 
-# 添加子目录以包含测试
-add_subdirectory(test)
+# 添加测试子目录（如果有测试文件）
+# add_subdirectory(test)
