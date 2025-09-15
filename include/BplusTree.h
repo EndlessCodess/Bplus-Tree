@@ -528,29 +528,35 @@ inline void BplusTree<keyType, valueType>::borrowFromR(
     auto currentRight =
         std::dynamic_pointer_cast<InterNode<keyType, valueType>>(rightSibling);
 
-    // 移入当前节点
-    currentNode->keys.push_back(currentRight->keys.front());
-    currentNode->children.push_back(currentRight->children.front());
-
-    // 右节点删除信息
-    currentRight->keys.erase(currentRight->keys.begin());
-    currentRight->children.erase(currentRight->children.begin());
+    // 更新子节点父指针
+    auto newChild = currentRight->children.front();
+    newChild->parent = currentNode;
 
     // 父节点指针更新
     auto childIt = std::find(parent->children.begin(), parent->children.end(),
                              currentNode);
     if (childIt != parent->children.end()) {
       size_t i = std::distance(parent->children.begin(), childIt);
-
-      // 遍历获得右边最小值
-      while (!currentRight->isLeafNode()) {
-        currentRight = std::dynamic_pointer_cast<InterNode<keyType, valueType>>(
-            currentRight->children.front());
-      }
-
-      // 已经为叶子结点
       parent->keys[i] = currentRight->keys.front();
     }
+
+    // 更新当前节点
+    auto current = currentRight; // InterNode
+    auto tempNode =
+        std::dynamic_pointer_cast<Node<keyType, valueType>>(current); // Node
+    while (!tempNode->isLeafNode()) {
+      current =
+          std::dynamic_pointer_cast<InterNode<keyType, valueType>>(tempNode);
+      tempNode = std::dynamic_pointer_cast<Node<keyType, valueType>>(
+          current->children.front());
+    }
+    currentNode->keys.push_back(tempNode->keys.front());
+
+    currentNode->children.push_back(currentRight->children.front());
+
+    // 右节点删除信息
+    currentRight->keys.erase(currentRight->keys.begin());
+    currentRight->children.erase(currentRight->children.begin());
   }
 }
 
