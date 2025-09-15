@@ -37,7 +37,7 @@ int main() {
 
   std::vector<int> insertedKeys; // 记录已插入的键
 
-  const int numKeys = 15;
+  const int numKeys = 10;
   std::cout << "Inserting " << numKeys << " random keys:\n";
   for (int i = 0; i < numKeys; ++i) {
     int key = dis(gen);
@@ -65,7 +65,7 @@ int main() {
 
   // 随机选择 10 个键进行删除（从 insertedKeys 中）
   std::shuffle(insertedKeys.begin(), insertedKeys.end(), gen);
-  const int numDeletions = std::min(5, static_cast<int>(insertedKeys.size()));
+  const int numDeletions = std::min(8, static_cast<int>(insertedKeys.size()));
   for (int i = 0; i < numDeletions; ++i) {
     int keyToDelete = insertedKeys[i];
     std::cout << "Deleting key: " << keyToDelete << "\n";
