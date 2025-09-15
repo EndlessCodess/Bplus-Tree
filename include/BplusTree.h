@@ -345,27 +345,31 @@ inline bool BplusTree<keyType, valueType>::adjust(
   auto leftSibling = getLeftSibling(node);
   auto rightSibling = getRightSibling(node);
 
-  // 右兄弟借出
-  if (rightSibling && rightSibling->keys.size() > minKeys) {
-    borrowFromR(node, rightSibling, parent);
-    return true;
-  }
-
   // 左兄弟借出
   if (leftSibling && leftSibling->keys.size() > minKeys) {
     borrowFromL(node, leftSibling, parent);
+    std::cout << "Borrowed from left sibling.\n" << std::endl;
     return true;
   }
 
-  // 右兄弟合并
-  if (rightSibling) {
-    mergeWithR(node, rightSibling, parent);
+  // 右兄弟借出
+  if (rightSibling && rightSibling->keys.size() > minKeys) {
+    borrowFromR(node, rightSibling, parent);
+    std::cout << "Borrowed from right sibling.\n" << std::endl;
     return true;
   }
 
   // 左兄弟合并
   if (leftSibling) {
     mergeWithL(node, leftSibling, parent);
+    std::cout << "Merged with left sibling.\n" << std::endl;
+    return true;
+  }
+
+  // 右兄弟合并
+  if (rightSibling) {
+    mergeWithR(node, rightSibling, parent);
+    std::cout << "Merged with right sibling.\n" << std::endl;
     return true;
   }
 
@@ -412,7 +416,7 @@ BplusTree<keyType, valueType>::getRightSibling(
   return std::shared_ptr<Node<keyType, valueType>>();
 }
 
-// 从左兄弟借
+// 从左兄弟借(已修改子指针)
 template <typename keyType, typename valueType>
 inline void BplusTree<keyType, valueType>::borrowFromL(
     std::shared_ptr<Node<keyType, valueType>> node,
@@ -450,14 +454,13 @@ inline void BplusTree<keyType, valueType>::borrowFromL(
         std::dynamic_pointer_cast<InterNode<keyType, valueType>>(leftSibling);
 
     // 移入当前节点
-    currentNode->keys.insert(currentNode->keys.begin(),
-                             currentLeft->keys.back());
-    currentNode->children.insert(currentNode->children.begin(),
-                                 currentLeft->children.back());
 
-    // 左兄弟删除该key
-    currentLeft->keys.pop_back();
-    currentLeft->children.pop_back();
+    // 更新子节点父指针
+    auto newChild = currentLeft->children.back();
+    newChild->parent = currentNode;
+
+    // currentNode->keys.insert(currentNode->keys.begin(),
+    //                        currentLeft->keys.back());
 
     // 父节点指针更新
     auto childIt = std::find(parent->children.begin(), parent->children.end(),
@@ -465,15 +468,28 @@ inline void BplusTree<keyType, valueType>::borrowFromL(
     if (childIt != parent->children.end()) {
       size_t i = std::distance(parent->children.begin(), childIt);
 
-      // 遍历获得右边最小值
-      while (!currentNode->isLeafNode()) {
-        currentNode = std::dynamic_pointer_cast<InterNode<keyType, valueType>>(
-            currentNode->children.front());
-      }
-
-      // 已经为叶子结点
-      parent->keys[i - 1] = currentNode->keys.front();
+      parent->keys[i - 1] = currentLeft->keys.back();
     }
+
+    // 更新当前节点
+    // 遍历获得右边最小值
+    auto current = currentNode; // InterNode
+    auto tempNode =
+        std::dynamic_pointer_cast<Node<keyType, valueType>>(current); // Node
+    while (!tempNode->isLeafNode()) {
+      current =
+          std::dynamic_pointer_cast<InterNode<keyType, valueType>>(tempNode);
+      tempNode = std::dynamic_pointer_cast<Node<keyType, valueType>>(
+          current->children.front());
+    }
+    currentNode->keys.insert(currentNode->keys.begin(), tempNode->keys.front());
+
+    currentNode->children.insert(currentNode->children.begin(),
+                                 currentLeft->children.back());
+
+    // 左兄弟删除该key
+    currentLeft->keys.pop_back();
+    currentLeft->children.pop_back();
   }
 }
 
@@ -871,16 +887,20 @@ inline bool BplusTree<keyType, valueType>::remove(const keyType &key) {
   // 1.寻找目标叶子结点
   auto targetLeaf = findLeaf(root, key);
   if (!targetLeaf) {
+    std::cout << "Key not found in the tree.\n" << std::endl;
     return false; // 未找到叶子结点
   }
 
   // 2.在叶子结点中找到对应key，并删除
-  auto it = std::find(targetLeaf->keys.begin(), targetLeaf->keys.end(), key);
+  auto it =
+      std::lower_bound(targetLeaf->keys.begin(), targetLeaf->keys.end(), key);
   if (it != targetLeaf->keys.end()) {
     size_t index = std::distance(targetLeaf->keys.begin(), it);
     targetLeaf->keys.erase(it);
     targetLeaf->values.erase(targetLeaf->values.begin() + index);
+    std::cout << "Key deleted successfully.\n" << std::endl;
   } else {
+    std::cout << "Key not found in the leaf node.\n" << std::endl;
     return false; // 未在叶子结点中找到key
   }
 
@@ -900,7 +920,8 @@ inline bool BplusTree<keyType, valueType>::remove(const keyType &key) {
     }
   }
 
-  return false;
+  std::cout << "No adjustment needed after deletion.\n" << std::endl;
+  return true;
 }
 
 // 单一查询(test)

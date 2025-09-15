@@ -1,4 +1,5 @@
 #include "../include/BplusTree.h"
+#include <algorithm>
 #include <ctime>
 #include <iostream>
 #include <memory>
@@ -59,48 +60,37 @@ int main() {
   std::cout << "Height: " << tree.getTreeHeight(tree.getRoot()) << "\n";
   std::cout << "Node count: " << tree.countNode() << "\n";
 
-  // 2.测试查找
+  // 2.测试删除
+  std::cout << "\nTesting deletion:\n";
 
-  // 2.1单一查找
-
-  // 随机的key
-  // std::cout << "\nTesting search:\n";
-  // for (int i = 0; i < numKeys; ++i) {
-  //   int key = dis(gen);
-  //   auto value = tree.search(key);
-  //   if (value) {
-  //     std::cout << "Found key: " << key << ", value: " << value << "\n";
-  //   } else {
-  //     std::cout << "Key " << key << " not found.\n";
-  //   }
-  // }
-
-  // // 存在的key
-  // std::cout << "\nTesting search:\n";
-  // for (int i = 0; i < numKeys; ++i) {
-  //   int key = insertedKeys[i];
-  //   auto value = tree.search(key);
-  //   if (value) {
-  //     std::cout << "Found key: " << key << ", value: " << value << "\n";
-  //   } else {
-  //     std::cout << "Key " << key << " not found.\n";
-  //   }
-  // }
-
-  // 2.2范围查找
-  int rangeStart = 100;
-  int rangeEnd = 300;
-  std::cout << "\nRange search from " << rangeStart << " to " << rangeEnd
-            << ":\n";
-  auto rangeResults = tree.rangeSearch(rangeStart, rangeEnd);
-  if (rangeResults.empty()) {
-    std::cout << "No keys found in the range.\n";
-  } else {
-    for (const auto &result : rangeResults) {
-      std::cout << "Key: " << result.first << ", Value: " << result.second
-                << "\n";
+  // 随机选择 10 个键进行删除（从 insertedKeys 中）
+  std::shuffle(insertedKeys.begin(), insertedKeys.end(), gen);
+  const int numDeletions = std::min(5, static_cast<int>(insertedKeys.size()));
+  for (int i = 0; i < numDeletions; ++i) {
+    int keyToDelete = insertedKeys[i];
+    std::cout << "Deleting key: " << keyToDelete << "\n";
+    bool success = tree.remove(keyToDelete);
+    if (success) {
+      std::cout << "Deletion successful.\n";
+    } else {
+      std::cout << "Deletion failed (key not found).\n";
     }
+    tree.printBplusTree(tree.getRoot(), 0);
+    std::cin.get(); // 等待用户按下回车继续
   }
+
+  // 输出删除后的树结构
+  std::cout << "\nTree structure after deletion:\n";
+  tree.printBplusTree(tree.getRoot(), 0);
+
+  // 输出删除后的中序遍历
+  std::cout << "Inorder traversal: ";
+  tree.inorderTraversal();
+  std::cout << "\n";
+
+  // 输出删除后的树高度和节点数
+  std::cout << "Height: " << tree.getTreeHeight(tree.getRoot()) << "\n";
+  std::cout << "Node count: " << tree.countNode() << "\n";
 
   return 0;
 }
