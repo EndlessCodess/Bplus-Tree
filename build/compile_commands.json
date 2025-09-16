@@ -1,8 +1,8 @@
 [
 {
   "directory": "/root/xy/c_plusprojects/Bplus-Tree/build",
-  "command": "/usr/bin/c++  -I/root/xy/c_plusprojects/Bplus-Tree/include -g -g -O0 -Wall -Wextra -pedantic -Werror -std=c++17 -o CMakeFiles/BplusTreeExe.dir/test/test3.cpp.o -c /root/xy/c_plusprojects/Bplus-Tree/test/test3.cpp",
-  "file": "/root/xy/c_plusprojects/Bplus-Tree/test/test3.cpp"
+  "command": "/usr/bin/c++  -I/root/xy/c_plusprojects/Bplus-Tree/include -g -g -O0 -Wall -Wextra -pedantic -Werror -std=c++17 -o CMakeFiles/BplusTreeExe.dir/test/test1.cpp.o -c /root/xy/c_plusprojects/Bplus-Tree/test/test1.cpp",
+  "file": "/root/xy/c_plusprojects/Bplus-Tree/test/test1.cpp"
 },
 {
   "directory": "/root/xy/c_plusprojects/Bplus-Tree/build/third_party/googletest/googlemock",

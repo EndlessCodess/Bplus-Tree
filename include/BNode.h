@@ -2,13 +2,12 @@
 #ifndef BNODE_H
 #define BNODE_H
 
+#include <cstddef>
 #include <memory>
 #include <vector>
 
 // 定义模板点类
-template <typename keyType, typename valueType>
-class Node
-{
+template <typename keyType, typename valueType> class Node {
 public:
   // 指向父节点
   std::shared_ptr<Node> parent;
@@ -23,8 +22,7 @@ public:
 
 // 定义内部节点类
 template <typename keyType, typename valueType>
-class InterNode : public Node<keyType, valueType>
-{
+class InterNode : public Node<keyType, valueType> {
 
 public:
   // 存储指向子节点的指针
@@ -35,8 +33,7 @@ public:
 
 // 定义叶子结点类
 template <typename keyType, typename valueType>
-class LeafNode : public Node<keyType, valueType>
-{
+class LeafNode : public Node<keyType, valueType> {
 
 public:
   std::vector<valueType> values;

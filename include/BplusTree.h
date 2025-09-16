@@ -5,9 +5,14 @@
 #include "BNode.h"
 #include <algorithm>
 #include <cstddef>
+#include <cstdint>
+#include <fstream>
 #include <iostream>
 #include <memory>
+#include <stdexcept>
 #include <string.h>
+#include <unordered_map>
+#include <vector>
 
 // 定义b+树类(key支持int/string，value为uint64_t)
 template <typename keyType = int, typename valueType = uint64_t>
@@ -16,11 +21,29 @@ private:
   // 根节点
   std::shared_ptr<Node<keyType, valueType>> root;
 
+  // 每个节点的最大和最小键数(关键字)
+  size_t maxKeys, minKeys;
+
+  // 元数据结构
+  struct MetaData {
+    size_t maxKeys;      // 每个节点的最大键数
+    size_t minKeys;      // 每个节点的最小键数
+    uint64_t rootOffset; // 根节点在文件中的偏移
+    int treeHeight;      // 树的高度
+  };
+
+  // 序列化节点
+  struct SerializedNode {
+    bool isLeaf;
+    size_t keyCount;
+    std::vector<keyType> keys;      // key数组
+    std::vector<valueType> values;  // value数组(仅叶子节点)
+    std::vector<uint64_t> children; // 子节点偏移(仅内部节点)
+    uint64_t nextOffset;            // 下一个叶子节点偏移(仅叶子节点)
+  };
+
   // 叶链表头节点
   //  std::shared_ptr<LeafNode<keyType, valueType>> head;
-
-  // 每个节点的最大和最小键数(关键字)
-  const size_t maxKeys, minKeys;
 
   // 寻找叶子结点
   std::shared_ptr<LeafNode<keyType, valueType>>
@@ -96,6 +119,19 @@ private:
   size_t
   countNodeHelper(const std::shared_ptr<Node<keyType, valueType>> &node) const;
 
+  // 持久化辅助函数
+  void saveNodeToFile(
+      const std::shared_ptr<Node<keyType, valueType>> &node,
+      std::ofstream &outFile,
+      std::unordered_map<std::shared_ptr<Node<keyType, valueType>>, uint64_t>
+          &nodeOffsetMap,
+      uint64_t &currentOffset) const;
+
+  void loadNodeFromFile(
+      std::ifstream &inFile, uint64_t offset,
+      std::unordered_map<uint64_t, std::shared_ptr<Node<keyType, valueType>>>
+          &offsetNodeMap) const;
+
 public:
   explicit BplusTree(size_t m)
       : root(nullptr), maxKeys(m - 1), minKeys((m + 1) / 2 - 1) {}
@@ -106,8 +142,11 @@ public:
   // 删除操作
   bool remove(const keyType &key);
 
-  // 搜索单个建
+  // 搜索单个键
   valueType search(const keyType &key) const;
+
+  // 更改单个键
+  bool modify(const keyType &key, const valueType &newValue);
 
   // 范围查找
   std::vector<std::pair<keyType, valueType>>
@@ -125,6 +164,13 @@ public:
 
   // 统计节点数量
   size_t countNode() const;
+
+  // 持久化接口
+  // 序列化
+  void serialize(const std::string &filename) const;
+
+  // 反序列化
+  void deserialize(const std::string &filename);
 
   // 获取root
   inline std::shared_ptr<Node<keyType, valueType>> getRoot() const {
@@ -802,6 +848,222 @@ inline void BplusTree<keyType, valueType>::printNode(
   }
 }
 
+// 将节点存入文件
+template <typename keyType, typename valueType>
+void BplusTree<keyType, valueType>::saveNodeToFile(
+    const std::shared_ptr<Node<keyType, valueType>> &node,
+    std::ofstream &outFile,
+    std::unordered_map<std::shared_ptr<Node<keyType, valueType>>, uint64_t>
+        &nodeOffsetMap,
+    uint64_t &currentOffset) const {
+  if (!node) {
+    std::cout << "Skipping null node at offset " << currentOffset << std::endl;
+    return;
+  }
+
+  // 分配当前偏移量给节点
+  uint64_t nodeOffset = currentOffset;
+  nodeOffsetMap[node] = nodeOffset;
+  std::cout << "Saving node at offset " << nodeOffset
+            << ", isLeaf: " << node->isLeafNode() << ", keys: ";
+  for (const auto &key : node->keys)
+    std::cout << key << " ";
+  std::cout << std::endl;
+
+  SerializedNode snode; // 确保模板化
+  snode.isLeaf = node->isLeafNode();
+  snode.keyCount = node->keys.size();
+  snode.keys = node->keys;
+
+  // 预计算节点大小
+  uint64_t nodeSize =
+      sizeof(bool) + sizeof(size_t) + snode.keys.size() * sizeof(keyType) +
+      (snode.isLeaf ? snode.keyCount * sizeof(valueType) + sizeof(uint64_t)
+                    : (snode.keyCount + 1) * sizeof(uint64_t));
+
+  // 递归保存子节点，递增 currentOffset
+  if (node->isLeafNode()) {
+    auto leafNode =
+        std::dynamic_pointer_cast<LeafNode<keyType, valueType>>(node);
+    snode.values = leafNode->values;
+
+    snode.nextOffset = 0; // 初始为0，稍后更新
+    std::cout << "Leaf node nextOffset: " << snode.nextOffset << std::endl;
+  } else {
+    auto interNode =
+        std::dynamic_pointer_cast<InterNode<keyType, valueType>>(node);
+    snode.children.resize(interNode->children.size());
+    for (size_t i = 0; i < interNode->children.size(); ++i) {
+
+      if (interNode->children[i]) {
+        if (i == 0) {
+          std::cout << "CurrentOffset is:" << currentOffset << std::endl;
+          currentOffset += nodeSize; // 预留空间
+          std::cout << "CurrentOffset is:" << currentOffset << std::endl;
+        }
+        saveNodeToFile(interNode->children[i], outFile, nodeOffsetMap,
+                       currentOffset);
+        std::cout << "Insert currentOffset is:" << currentOffset << std::endl;
+      }
+    }
+    for (size_t i = 0; i < interNode->children.size(); ++i) {
+      snode.children[i] =
+          interNode->children[i] ? nodeOffsetMap[interNode->children[i]] : 0;
+      std::cout << "Child " << i << " offset: " << snode.children[i]
+                << std::endl;
+    }
+  }
+
+  // 写入数据
+  std::cout << "CurrentOffset is:" << nodeOffset << std::endl;
+  outFile.seekp(static_cast<std::streamoff>(nodeOffset));
+  outFile.write(reinterpret_cast<const char *>(&snode.isLeaf), sizeof(bool));
+  outFile.write(reinterpret_cast<const char *>(&snode.keyCount),
+                sizeof(size_t));
+  outFile.write(reinterpret_cast<const char *>(snode.keys.data()),
+                snode.keys.size() * sizeof(keyType));
+  if (snode.isLeaf) {
+    outFile.write(reinterpret_cast<const char *>(snode.values.data()),
+                  snode.values.size() * sizeof(valueType));
+    // 写入初始 nextOffset
+    outFile.write(reinterpret_cast<const char *>(&snode.nextOffset),
+                  sizeof(uint64_t));
+  } else {
+    outFile.write(reinterpret_cast<const char *>(snode.children.data()),
+                  snode.children.size() * sizeof(uint64_t));
+  }
+
+  // 动态更新叶子节点的 nextOffset
+  // if (snode.isLeaf) {
+  //   auto leafNode =
+  //       std::dynamic_pointer_cast<LeafNode<keyType, valueType>>(node);
+  //   if (leafNode->next &&
+  //       nodeOffsetMap.find(leafNode->next) != nodeOffsetMap.end()) {
+  //     snode.nextOffset = nodeOffsetMap[leafNode->next];
+  //     // 回写 nextOffset
+  //     outFile.seekp(static_cast<std::streamoff>(
+  //         nodeOffset + sizeof(bool) + sizeof(size_t) +
+  //         snode.keys.size() * sizeof(keyType) +
+  //         snode.keyCount * sizeof(valueType)));
+  //     outFile.write(reinterpret_cast<const char *>(&snode.nextOffset),
+  //                   sizeof(uint64_t));
+  //     std::cout << "Updated Leaf node nextOffset: " << snode.nextOffset
+  //               << std::endl;
+  //   }
+  // }
+
+  // 更新 currentOffset
+  if (node->isLeafNode()) {
+    currentOffset = nodeOffset + nodeSize;
+  }
+
+  std::cout << "Updated offset after writing: " << currentOffset << std::endl;
+
+  if (!outFile.good()) {
+    throw std::runtime_error("Failed to write node to file");
+  }
+}
+
+// 从文件加载节点
+template <typename keyType, typename valueType>
+void BplusTree<keyType, valueType>::loadNodeFromFile(
+    std::ifstream &inFile, uint64_t offset,
+    std::unordered_map<uint64_t, std::shared_ptr<Node<keyType, valueType>>>
+        &offsetNodeMap) const {
+  if (offsetNodeMap.find(offset) != offsetNodeMap.end()) {
+    std::cout << "Node at offset " << offset << " already loaded, skipping"
+              << std::endl;
+    return;
+  }
+
+  std::cout << "Loading node at offset " << offset << std::endl;
+  inFile.seekg(static_cast<std::streamoff>(offset));
+  if (!inFile.good()) {
+    throw std::runtime_error("Failed to seek to offset " +
+                             std::to_string(offset) + " in file");
+  }
+
+  SerializedNode snode;
+  inFile.read(reinterpret_cast<char *>(&snode.isLeaf), sizeof(bool));
+  inFile.read(reinterpret_cast<char *>(&snode.keyCount), sizeof(size_t));
+  snode.keys.resize(snode.keyCount);
+  inFile.read(reinterpret_cast<char *>(snode.keys.data()),
+              snode.keys.size() * sizeof(keyType));
+  std::cout << "Read node: isLeaf=" << snode.isLeaf
+            << ", keyCount=" << snode.keyCount << ", keys: ";
+  for (const auto &key : snode.keys)
+    std::cout << key << " ";
+  std::cout << std::endl;
+  if (!inFile.good()) {
+    throw std::runtime_error("Failed to read keys at offset " +
+                             std::to_string(offset));
+  }
+
+  if (snode.isLeaf) {
+    snode.values.resize(snode.keyCount);
+    inFile.read(reinterpret_cast<char *>(snode.values.data()),
+                snode.values.size() * sizeof(valueType));
+    inFile.read(reinterpret_cast<char *>(&snode.nextOffset), sizeof(uint64_t));
+    std::cout << "Leaf node values: ";
+    for (const auto &val : snode.values)
+      std::cout << val << " ";
+    std::cout << ", nextOffset=" << snode.nextOffset << std::endl;
+    if (!inFile.good()) {
+      throw std::runtime_error(
+          "Failed to read values or nextOffset at offset " +
+          std::to_string(offset));
+    }
+  } else {
+    snode.children.resize(snode.keyCount + 1);
+    inFile.read(reinterpret_cast<char *>(snode.children.data()),
+                snode.children.size() * sizeof(uint64_t));
+    std::cout << "Internal node children offsets: ";
+    for (const auto &child : snode.children)
+      std::cout << child << " ";
+    std::cout << std::endl;
+    if (!inFile.good()) {
+      throw std::runtime_error("Failed to read children at offset " +
+                               std::to_string(offset));
+    }
+  }
+
+  std::shared_ptr<Node<keyType, valueType>> newNode;
+  if (snode.isLeaf) {
+    auto leaf = std::make_shared<LeafNode<keyType, valueType>>();
+    leaf->keys = snode.keys;
+    leaf->values = snode.values;
+    newNode = leaf;
+  } else {
+    auto inter = std::make_shared<InterNode<keyType, valueType>>();
+    inter->keys = snode.keys;
+    inter->children.resize(snode.children.size());
+    newNode = inter;
+  }
+
+  offsetNodeMap[offset] = newNode;
+  std::cout << "Node cached at offset " << offset << std::endl;
+
+  if (snode.isLeaf && snode.nextOffset != 0) {
+    std::cout << "Loading next leaf at offset " << snode.nextOffset
+              << std::endl;
+    loadNodeFromFile(inFile, snode.nextOffset, offsetNodeMap);
+    std::dynamic_pointer_cast<LeafNode<keyType, valueType>>(newNode)->next =
+        std::dynamic_pointer_cast<LeafNode<keyType, valueType>>(
+            offsetNodeMap[snode.nextOffset]);
+  } else if (!snode.isLeaf) {
+    auto inter =
+        std::dynamic_pointer_cast<InterNode<keyType, valueType>>(newNode);
+    for (size_t i = 0; i < snode.children.size(); ++i) {
+      if (snode.children[i] != 0) {
+        std::cout << "Loading child " << i << " at offset " << snode.children[i]
+                  << std::endl;
+        loadNodeFromFile(inFile, snode.children[i], offsetNodeMap);
+        inter->children[i] = offsetNodeMap[snode.children[i]];
+      }
+    }
+  }
+}
+
 // 外部接口
 // 插入操作(test)
 template <typename keyType, typename valueType>
@@ -874,10 +1136,12 @@ inline void BplusTree<keyType, valueType>::insert(const keyType &key,
   //       break;
   //     }
   //     // 叶子节点分裂
-  //     if (currentNode->keys.size() > maxKeys && currentNode->isLeafNode())
+  //     if (currentNode->keys.size() > maxKeys &&
+  //     currentNode->isLeafNode())
   //     {
 
-  //       splitLeaf(std::dynamic_pointer_cast<LeafNode<keyType, valueType>>(
+  //       splitLeaf(std::dynamic_pointer_cast<LeafNode<keyType,
+  //       valueType>>(
   //           currentNode));
   //     }
   //     // 内部节点分裂
@@ -970,6 +1234,33 @@ BplusTree<keyType, valueType>::search(const keyType &key) const {
   }
 
   return valueType{};
+}
+
+// 改动单键
+template <typename keyType, typename valueType>
+inline bool BplusTree<keyType, valueType>::modify(const keyType &key,
+                                                  const valueType &newValue) {
+
+  // 查找搜索key
+  auto targetLeaf = findLeaf(root, key);
+
+  // 未找到节点
+  if (!targetLeaf) {
+    return valueType{}; // 返回默认构造值
+  }
+
+  // 查找候选目标key
+  auto it =
+      std::lower_bound(targetLeaf->keys.begin(), targetLeaf->keys.end(), key);
+
+  // 进一步判断
+  if (it != targetLeaf->keys.end() && *it == key) {
+    size_t i = std::distance(targetLeaf->keys.begin(), it);
+    targetLeaf->values[i] = newValue;
+    return true;
+  }
+
+  return false;
 }
 
 // 范围查询(test)
@@ -1145,6 +1436,104 @@ inline size_t BplusTree<keyType, valueType>::countNodeHelper(
   }
 
   return count;
+}
+
+template <typename keyType, typename valueType>
+inline void
+BplusTree<keyType, valueType>::serialize(const std::string &filename) const {
+  std::cout << "Starting serialization to: " << filename << std::endl;
+  std::ofstream outFile(filename, std::ios::binary);
+  if (!outFile.is_open()) {
+    throw std::runtime_error("Failed to open file for writing: " + filename);
+  }
+
+  MetaData metaData = {maxKeys, minKeys, 0, getTreeHeight(root)};
+  std::cout << "Writing metadata: maxKeys=" << metaData.maxKeys
+            << ", minKeys=" << metaData.minKeys
+            << ", initial rootOffset=0, height=" << metaData.treeHeight
+            << std::endl;
+  outFile.write(reinterpret_cast<const char *>(&metaData), sizeof(MetaData));
+
+  std::unordered_map<std::shared_ptr<Node<keyType, valueType>>, uint64_t>
+      nodeOffsetMap;
+  uint64_t currentOffset = sizeof(MetaData);
+  std::cout << "Initial offset after metadata: " << currentOffset << std::endl;
+
+  saveNodeToFile(root, outFile, nodeOffsetMap, currentOffset);
+
+  outFile.seekp(0);
+  metaData.rootOffset = root ? nodeOffsetMap[root] : 0;
+  std::cout << "Updating metadata with rootOffset: " << metaData.rootOffset
+            << std::endl;
+  outFile.write(reinterpret_cast<const char *>(&metaData), sizeof(MetaData));
+
+  outFile.close();
+  std::cout << "Serialization completed, final offset: " << currentOffset
+            << std::endl;
+
+  if (!outFile.good()) {
+    throw std::runtime_error("Failed to write to file: " + filename);
+  }
+}
+
+// 反序列化主函数
+template <typename keyType, typename valueType>
+inline void
+BplusTree<keyType, valueType>::deserialize(const std::string &filename) {
+  std::cout << "Starting deserialization from: " << filename << std::endl;
+  std::ifstream inFile(filename, std::ios::binary);
+  if (!inFile.is_open()) {
+    throw std::runtime_error("Failed to open file for reading: " + filename);
+  }
+
+  MetaData metaData;
+  inFile.read(reinterpret_cast<char *>(&metaData), sizeof(MetaData));
+  std::cout << "Read metadata: maxKeys=" << metaData.maxKeys
+            << ", minKeys=" << metaData.minKeys
+            << ", rootOffset=" << metaData.rootOffset
+            << ", height=" << metaData.treeHeight << std::endl;
+  if (!inFile.good()) {
+    inFile.close();
+    throw std::runtime_error("Failed to read metadata from file: " + filename);
+  }
+
+  if (metaData.maxKeys != maxKeys || metaData.minKeys != minKeys) {
+    inFile.close();
+    throw std::runtime_error(
+        "Incompatible B+ tree parameters: file (maxKeys=" +
+        std::to_string(metaData.maxKeys) +
+        ", minKeys=" + std::to_string(metaData.minKeys) +
+        ") vs constructor (maxKeys=" + std::to_string(maxKeys) +
+        ", minKeys=" + std::to_string(minKeys) + ")");
+  }
+
+  root = nullptr;
+
+  std::unordered_map<uint64_t, std::shared_ptr<Node<keyType, valueType>>>
+      offsetNodeMap;
+
+  if (metaData.rootOffset != 0) {
+    std::cout << "Loading root node from offset: " << metaData.rootOffset
+              << std::endl;
+    loadNodeFromFile(inFile, metaData.rootOffset, offsetNodeMap);
+    if (offsetNodeMap.find(metaData.rootOffset) == offsetNodeMap.end()) {
+      throw std::runtime_error("Root node not found at offset " +
+                               std::to_string(metaData.rootOffset));
+    }
+    root = offsetNodeMap[metaData.rootOffset];
+    std::cout << "Root node loaded, keys: ";
+    for (const auto &key : root->keys)
+      std::cout << key << " ";
+    std::cout << std::endl;
+  }
+
+  inFile.close();
+  std::cout << "Deserialization completed, total nodes loaded: "
+            << offsetNodeMap.size() << std::endl;
+
+  if (!inFile.good()) {
+    throw std::runtime_error("Failed to read file: " + filename);
+  }
 }
 
 #endif

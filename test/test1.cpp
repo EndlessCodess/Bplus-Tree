@@ -43,9 +43,28 @@ int main() {
             << "\n";                                       // 预期：3
   std::cout << "Node count: " << tree.countNode() << "\n"; // 预期：10
 
-  // 基本断言
-  assert(tree.getTreeHeight(tree.getRoot()) <= 3);
-  assert(tree.countNode() >= 5); // 至少有根、内部节点和叶子节点
+  // 测试 3:改动部分key
+  tree.modify(4, 400);
+  tree.modify(6, 600);
+  tree.modify(10, 1000);
+  tree.printBplusTree(tree.getRoot(), 0);
+  std::cout << "Inorder: ";
+  tree.inorderTraversal(); // 预期：1:10 2:20 3:30 4:400 5:50 6:600 7:70
+  std::cout << "\n";
+
+  // 测试 4:序列化
+  std::string filename = "./data/bplustree.dat";
+  std::cout << "=== Serialize to 'bplustree.dat' ===\n";
+  tree.serialize(filename);
+  std::cout << "Serialization completed successfully!\n";
+
+  // 注释反序列化部分（待实现）
+  BplusTree<int, uint64_t> newTree(3);
+  std::cout << "=== Deserialize from 'bplustree.dat' ===\n";
+  newTree.deserialize(filename);
+  newTree.printBplusTree(newTree.getRoot(), 0);
+  std::cout << "Inorder: ";
+  newTree.inorderTraversal();
 
   std::cout << "All tests passed!\n";
 

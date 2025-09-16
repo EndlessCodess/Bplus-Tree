@@ -249,29 +249,29 @@ gtest_main/fast:
 	$(MAKE) $(MAKESILENT) -f third_party/googletest/googletest/CMakeFiles/gtest_main.dir/build.make third_party/googletest/googletest/CMakeFiles/gtest_main.dir/build
 .PHONY : gtest_main/fast
 
-test/test3.o: test/test3.cpp.o
-.PHONY : test/test3.o
+test/test1.o: test/test1.cpp.o
+.PHONY : test/test1.o
 
 # target to build an object file
-test/test3.cpp.o:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/BplusTreeExe.dir/build.make CMakeFiles/BplusTreeExe.dir/test/test3.cpp.o
-.PHONY : test/test3.cpp.o
+test/test1.cpp.o:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/BplusTreeExe.dir/build.make CMakeFiles/BplusTreeExe.dir/test/test1.cpp.o
+.PHONY : test/test1.cpp.o
 
-test/test3.i: test/test3.cpp.i
-.PHONY : test/test3.i
+test/test1.i: test/test1.cpp.i
+.PHONY : test/test1.i
 
 # target to preprocess a source file
-test/test3.cpp.i:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/BplusTreeExe.dir/build.make CMakeFiles/BplusTreeExe.dir/test/test3.cpp.i
-.PHONY : test/test3.cpp.i
+test/test1.cpp.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/BplusTreeExe.dir/build.make CMakeFiles/BplusTreeExe.dir/test/test1.cpp.i
+.PHONY : test/test1.cpp.i
 
-test/test3.s: test/test3.cpp.s
-.PHONY : test/test3.s
+test/test1.s: test/test1.cpp.s
+.PHONY : test/test1.s
 
 # target to generate assembly for a file
-test/test3.cpp.s:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/BplusTreeExe.dir/build.make CMakeFiles/BplusTreeExe.dir/test/test3.cpp.s
-.PHONY : test/test3.cpp.s
+test/test1.cpp.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/BplusTreeExe.dir/build.make CMakeFiles/BplusTreeExe.dir/test/test1.cpp.s
+.PHONY : test/test1.cpp.s
 
 # Help Target
 help:
@@ -292,9 +292,9 @@ help:
 	@echo "... gmock_main"
 	@echo "... gtest"
 	@echo "... gtest_main"
-	@echo "... test/test3.o"
-	@echo "... test/test3.i"
-	@echo "... test/test3.s"
+	@echo "... test/test1.o"
+	@echo "... test/test1.i"
+	@echo "... test/test1.s"
 .PHONY : help
 
 
