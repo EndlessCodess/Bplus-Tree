@@ -1527,6 +1527,31 @@ BplusTree<keyType, valueType>::deserialize(const std::string &filename) {
     std::cout << std::endl;
   }
 
+  // 提取并排序叶子节点
+  std::vector<std::shared_ptr<Node<keyType, valueType>>> leafNodes;
+  for (const auto &pair : offsetNodeMap) {
+    if (pair.second->isLeafNode()) {
+      leafNodes.push_back(pair.second);
+    }
+  }
+  std::sort(leafNodes.begin(), leafNodes.end(),
+            [&offsetNodeMap](const auto &a, const auto &b) {
+              return a->keys[0] < b->keys[0];
+            });
+
+  std::cout << "LeafNodes size is:" << leafNodes.size() << std::endl;
+
+  // 连接叶子节点链
+  for (size_t i = 0; i < leafNodes.size() - 1; ++i) {
+    auto leafNode =
+        std::dynamic_pointer_cast<LeafNode<keyType, valueType>>(leafNodes[i]);
+    auto nextNode = std::dynamic_pointer_cast<LeafNode<keyType, valueType>>(
+        leafNodes[i + 1]);
+    leafNode->next = nextNode;
+    std::cout << "Connected leaf node at offset " << leafNode->keys.front()
+              << " to offset " << nextNode->keys.front() << std::endl;
+  }
+
   inFile.close();
   std::cout << "Deserialization completed, total nodes loaded: "
             << offsetNodeMap.size() << std::endl;

@@ -4,7 +4,7 @@
 
 int main() {
   // 创建 B+ 树，m=3（maxKeys=2, minKeys=1）
-  BplusTree<int, uint64_t> tree(3);
+  BplusTree<int, uint64_t> tree(4);
 
   // 测试 1：插入 1, 2, 3（触发根为叶子分裂）
   std::cout << "=== Insert 1, 2, 3 ===\n";
@@ -52,6 +52,15 @@ int main() {
   tree.inorderTraversal(); // 预期：1:10 2:20 3:30 4:400 5:50 6:600 7:70
   std::cout << "\n";
 
+  tree.insert(8, 80);
+  tree.insert(9, 90);
+  tree.insert(10, 100);
+  tree.insert(11, 110);
+  tree.insert(12, 120);
+  tree.insert(13, 130);
+  tree.insert(14, 140);
+  tree.insert(15, 150);
+
   // 测试 4:序列化
   std::string filename = "./data/bplustree.dat";
   std::cout << "=== Serialize to 'bplustree.dat' ===\n";
@@ -59,7 +68,7 @@ int main() {
   std::cout << "Serialization completed successfully!\n";
 
   // 注释反序列化部分（待实现）
-  BplusTree<int, uint64_t> newTree(3);
+  BplusTree<int, uint64_t> newTree(4);
   std::cout << "=== Deserialize from 'bplustree.dat' ===\n";
   newTree.deserialize(filename);
   newTree.printBplusTree(newTree.getRoot(), 0);
