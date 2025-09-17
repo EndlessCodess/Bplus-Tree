@@ -1,8 +1,8 @@
 file(REMOVE_RECURSE
   "../bin/Debug/BplusTreeExe"
   "../bin/Debug/BplusTreeExe.pdb"
-  "CMakeFiles/BplusTreeExe.dir/test/test1.cpp.o"
-  "CMakeFiles/BplusTreeExe.dir/test/test1.cpp.o.d"
+  "CMakeFiles/BplusTreeExe.dir/test/test8.cpp.o"
+  "CMakeFiles/BplusTreeExe.dir/test/test8.cpp.o.d"
 )
 
 # Per-language clean rules from dependency scanning.

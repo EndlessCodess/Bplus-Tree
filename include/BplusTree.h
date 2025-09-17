@@ -9,6 +9,8 @@
 #include <fstream>
 #include <iostream>
 #include <memory>
+#include <mutex>
+#include <shared_mutex>
 #include <stdexcept>
 #include <string.h>
 #include <unordered_map>
@@ -18,6 +20,9 @@
 template <typename keyType = int, typename valueType = uint64_t>
 class BplusTree {
 private:
+  // 读写锁控制
+  std::shared_mutex rw_mutex;
+
   // 根节点
   std::shared_ptr<Node<keyType, valueType>> root;
 
@@ -116,8 +121,7 @@ private:
                  int depth) const;
 
   // 递归辅助函数
-  size_t
-  countNodeHelper(const std::shared_ptr<Node<keyType, valueType>> &node) const;
+  size_t countNodeHelper(const std::shared_ptr<Node<keyType, valueType>> &node);
 
   // 持久化辅助函数
   void saveNodeToFile(
@@ -143,37 +147,38 @@ public:
   bool remove(const keyType &key);
 
   // 搜索单个键
-  valueType search(const keyType &key) const;
+  valueType search(const keyType &key);
 
   // 更改单个键
   bool modify(const keyType &key, const valueType &newValue);
 
   // 范围查找
   std::vector<std::pair<keyType, valueType>>
-  rangeSearch(const keyType &startKey, const keyType &endKey) const;
+  rangeSearch(const keyType &startKey, const keyType &endKey);
 
   // 中序遍历
-  void inorderTraversal() const;
+  void inorderTraversal();
 
   // 打印b+树
   void printBplusTree(std::shared_ptr<Node<keyType, valueType>> node,
-                      const int level) const;
+                      const int level);
 
   // 获取树的高度
-  int getTreeHeight(std::shared_ptr<Node<keyType, valueType>> node) const;
+  int getTreeHeight(std::shared_ptr<Node<keyType, valueType>> node);
 
   // 统计节点数量
-  size_t countNode() const;
+  size_t countNode();
 
   // 持久化接口
   // 序列化
-  void serialize(const std::string &filename) const;
+  void serialize(const std::string &filename);
 
   // 反序列化
   void deserialize(const std::string &filename);
 
   // 获取root
-  inline std::shared_ptr<Node<keyType, valueType>> getRoot() const {
+  inline std::shared_ptr<Node<keyType, valueType>> getRoot() {
+    std::shared_lock<std::shared_mutex> read_lock(rw_mutex);
     return root;
   }
 };
@@ -1070,6 +1075,9 @@ template <typename keyType, typename valueType>
 inline void BplusTree<keyType, valueType>::insert(const keyType &key,
                                                   const valueType &value) {
 
+  // 加上独占锁
+  std::unique_lock<std::shared_mutex> write_lock(rw_mutex);
+
   // 1.判断是否为空
   if (!root) {
     root = std::make_shared<LeafNode<keyType, valueType>>();
@@ -1170,6 +1178,16 @@ inline void BplusTree<keyType, valueType>::insert(const keyType &key,
 // 删除操作(test)
 template <typename keyType, typename valueType>
 inline bool BplusTree<keyType, valueType>::remove(const keyType &key) {
+
+  // 加上独占锁
+  std::unique_lock<std::shared_mutex> write_lock(rw_mutex);
+
+  // 根节点为空
+  if (!root) {
+    std::cout << "Tree is empty.\n" << std::endl;
+    return false; // 树为空
+  }
+
   // 1.寻找目标叶子结点
   auto targetLeaf = findLeaf(root, key);
   if (!targetLeaf) {
@@ -1212,8 +1230,16 @@ inline bool BplusTree<keyType, valueType>::remove(const keyType &key) {
 
 // 单一查询(test)
 template <typename keyType, typename valueType>
-inline valueType
-BplusTree<keyType, valueType>::search(const keyType &key) const {
+inline valueType BplusTree<keyType, valueType>::search(const keyType &key) {
+
+  // 加上共享锁
+  std::shared_lock<std::shared_mutex> read_lock(rw_mutex);
+
+  // 如果根为空返回
+  if (!root) {
+    std::cout << "Tree is empty." << std::endl;
+    return valueType{}; // 返回默认构造值
+  }
 
   // 获取叶子结点
   auto targetLeaf = findLeaf(root, key);
@@ -1241,12 +1267,21 @@ template <typename keyType, typename valueType>
 inline bool BplusTree<keyType, valueType>::modify(const keyType &key,
                                                   const valueType &newValue) {
 
+  // 加上独占锁
+  std::unique_lock<std::shared_mutex> write_lock(rw_mutex);
+
+  // 根节点为空
+  if (!root) {
+    std::cout << "Tree is empty." << std::endl;
+    return false; // 返回默认构造值
+  }
+
   // 查找搜索key
   auto targetLeaf = findLeaf(root, key);
 
   // 未找到节点
   if (!targetLeaf) {
-    return valueType{}; // 返回默认构造值
+    return false; // 返回默认构造值
   }
 
   // 查找候选目标key
@@ -1267,7 +1302,16 @@ inline bool BplusTree<keyType, valueType>::modify(const keyType &key,
 template <typename keyType, typename valueType>
 inline std::vector<std::pair<keyType, valueType>>
 BplusTree<keyType, valueType>::rangeSearch(const keyType &startKey,
-                                           const keyType &endKey) const {
+                                           const keyType &endKey) {
+
+  // 加上共享锁
+  std::shared_lock<std::shared_mutex> read_lock(rw_mutex);
+
+  // 根节点为空
+  if (!root) {
+    std::cout << "Tree is empty." << std::endl;
+    return {}; // 返回空结果
+  }
 
   std::vector<std::pair<keyType, valueType>> result;
 
@@ -1317,7 +1361,17 @@ BplusTree<keyType, valueType>::rangeSearch(const keyType &startKey,
 
 // 中序遍历
 template <typename keyType, typename valueType>
-inline void BplusTree<keyType, valueType>::inorderTraversal() const {
+inline void BplusTree<keyType, valueType>::inorderTraversal() {
+
+  // 加上共享锁
+  std::shared_lock<std::shared_mutex> read_lock(rw_mutex);
+
+  // 根节点为空
+  if (!root) {
+    std::cout << "Tree is empty." << std::endl;
+    return;
+  }
+
   // 获取头节点
   std::shared_ptr<Node<keyType, valueType>> currentNode = root;
   while (currentNode && !currentNode->isLeafNode()) {
@@ -1347,10 +1401,14 @@ inline void BplusTree<keyType, valueType>::inorderTraversal() const {
 // 打印B+树
 template <typename keyType, typename valueType>
 inline void BplusTree<keyType, valueType>::printBplusTree(
-    std::shared_ptr<Node<keyType, valueType>> node, const int level) const {
+    std::shared_ptr<Node<keyType, valueType>> node, const int level) {
+
+  // 加上共享锁
+  std::shared_lock<std::shared_mutex> read_lock(rw_mutex);
 
   // 判断树是否为空
   if (!root) {
+    std::cout << "Tree is empty." << std::endl;
     return;
   }
 
@@ -1385,7 +1443,11 @@ inline void BplusTree<keyType, valueType>::printBplusTree(
 // 获取树高
 template <typename keyType, typename valueType>
 inline int BplusTree<keyType, valueType>::getTreeHeight(
-    std::shared_ptr<Node<keyType, valueType>> node) const {
+    std::shared_ptr<Node<keyType, valueType>> node) {
+
+  // 加上共享锁
+  std::shared_lock<std::shared_mutex> read_lock(rw_mutex);
+
   if (!node) {
     return 0;
   }
@@ -1403,10 +1465,14 @@ inline int BplusTree<keyType, valueType>::getTreeHeight(
 
 // 统计节点数量
 template <typename keyType, typename valueType>
-inline size_t BplusTree<keyType, valueType>::countNode() const {
+inline size_t BplusTree<keyType, valueType>::countNode() {
+
+  // 加上共享锁
+  std::shared_lock<std::shared_mutex> read_lock(rw_mutex);
 
   // 如果树为空，返回0
   if (!root) {
+    std::cout << "Tree is empty." << std::endl;
     return 0;
   }
   // 调用递归辅助函数
@@ -1416,7 +1482,7 @@ inline size_t BplusTree<keyType, valueType>::countNode() const {
 // 统计辅助函数
 template <typename keyType, typename valueType>
 inline size_t BplusTree<keyType, valueType>::countNodeHelper(
-    const std::shared_ptr<Node<keyType, valueType>> &node) const {
+    const std::shared_ptr<Node<keyType, valueType>> &node) {
 
   if (!node) {
     return 0;
@@ -1440,7 +1506,11 @@ inline size_t BplusTree<keyType, valueType>::countNodeHelper(
 
 template <typename keyType, typename valueType>
 inline void
-BplusTree<keyType, valueType>::serialize(const std::string &filename) const {
+BplusTree<keyType, valueType>::serialize(const std::string &filename) {
+
+  // 加上共享锁
+  std::shared_lock<std::shared_mutex> read_lock(rw_mutex);
+
   std::cout << "Starting serialization to: " << filename << std::endl;
   std::ofstream outFile(filename, std::ios::binary);
   if (!outFile.is_open()) {
@@ -1480,6 +1550,10 @@ BplusTree<keyType, valueType>::serialize(const std::string &filename) const {
 template <typename keyType, typename valueType>
 inline void
 BplusTree<keyType, valueType>::deserialize(const std::string &filename) {
+
+  // 加上独占锁
+  std::unique_lock<std::shared_mutex> write_lock(rw_mutex);
+
   std::cout << "Starting deserialization from: " << filename << std::endl;
   std::ifstream inFile(filename, std::ios::binary);
   if (!inFile.is_open()) {
