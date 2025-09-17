@@ -399,28 +399,28 @@ inline bool BplusTree<keyType, valueType>::adjust(
   // 左兄弟借出
   if (leftSibling && leftSibling->keys.size() > minKeys) {
     borrowFromL(node, leftSibling, parent);
-    std::cout << "Borrowed from left sibling.\n" << std::endl;
+    // std::cout << "Borrowed from left sibling.\n" << std::endl;
     return true;
   }
 
   // 右兄弟借出
   if (rightSibling && rightSibling->keys.size() > minKeys) {
     borrowFromR(node, rightSibling, parent);
-    std::cout << "Borrowed from right sibling.\n" << std::endl;
+    // std::cout << "Borrowed from right sibling.\n" << std::endl;
     return true;
   }
 
   // 左兄弟合并
   if (leftSibling) {
     mergeWithL(node, leftSibling, parent);
-    std::cout << "Merged with left sibling.\n" << std::endl;
+    // std::cout << "Merged with left sibling.\n" << std::endl;
     return true;
   }
 
   // 右兄弟合并
   if (rightSibling) {
     mergeWithR(node, rightSibling, parent);
-    std::cout << "Merged with right sibling.\n" << std::endl;
+    // std::cout << "Merged with right sibling.\n" << std::endl;
     return true;
   }
 
@@ -1191,7 +1191,7 @@ inline bool BplusTree<keyType, valueType>::remove(const keyType &key) {
   // 1.寻找目标叶子结点
   auto targetLeaf = findLeaf(root, key);
   if (!targetLeaf) {
-    std::cout << "Key not found in the tree.\n" << std::endl;
+    // std::cout << "Key not found in the tree.\n" << std::endl;
     return false; // 未找到叶子结点
   }
 
@@ -1202,9 +1202,9 @@ inline bool BplusTree<keyType, valueType>::remove(const keyType &key) {
     size_t index = std::distance(targetLeaf->keys.begin(), it);
     targetLeaf->keys.erase(it);
     targetLeaf->values.erase(targetLeaf->values.begin() + index);
-    std::cout << "Key deleted successfully.\n" << std::endl;
+    // std::cout << "Key deleted successfully.\n" << std::endl;
   } else {
-    std::cout << "Key not found in the leaf node.\n" << std::endl;
+    // std::cout << "Key not found in the leaf node.\n" << std::endl;
     return false; // 未在叶子结点中找到key
   }
 
@@ -1224,7 +1224,7 @@ inline bool BplusTree<keyType, valueType>::remove(const keyType &key) {
     }
   }
 
-  std::cout << "No adjustment needed after deletion.\n" << std::endl;
+  // std::cout << "No adjustment needed after deletion.\n" << std::endl;
   return true;
 }
 

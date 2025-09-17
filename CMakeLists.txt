@@ -42,7 +42,9 @@ target_include_directories(BplusTree INTERFACE ${INCLUDE_DIR})
 
 # 添加可执行文件
 # add_executable(BplusTreeExe ${SOURCE_DIR}/main.cpp)
-add_executable(BplusTreeExe ${TEST_DIR}/test8.cpp)
+# add_executable(BplusTreeExe ${TEST_DIR}/batch_insert.cpp)
+# add_executable(BplusTreeExe ${TEST_DIR}/batch_remove.cpp)
+add_executable(BplusTreeExe ${TEST_DIR}/batch_query.cpp)
 target_include_directories(BplusTreeExe PRIVATE ${INCLUDE_DIR})
 target_link_libraries(BplusTreeExe PRIVATE BplusTree)
 

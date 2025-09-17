@@ -249,29 +249,29 @@ gtest_main/fast:
 	$(MAKE) $(MAKESILENT) -f third_party/googletest/googletest/CMakeFiles/gtest_main.dir/build.make third_party/googletest/googletest/CMakeFiles/gtest_main.dir/build
 .PHONY : gtest_main/fast
 
-test/test8.o: test/test8.cpp.o
-.PHONY : test/test8.o
+test/batch_query.o: test/batch_query.cpp.o
+.PHONY : test/batch_query.o
 
 # target to build an object file
-test/test8.cpp.o:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/BplusTreeExe.dir/build.make CMakeFiles/BplusTreeExe.dir/test/test8.cpp.o
-.PHONY : test/test8.cpp.o
+test/batch_query.cpp.o:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/BplusTreeExe.dir/build.make CMakeFiles/BplusTreeExe.dir/test/batch_query.cpp.o
+.PHONY : test/batch_query.cpp.o
 
-test/test8.i: test/test8.cpp.i
-.PHONY : test/test8.i
+test/batch_query.i: test/batch_query.cpp.i
+.PHONY : test/batch_query.i
 
 # target to preprocess a source file
-test/test8.cpp.i:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/BplusTreeExe.dir/build.make CMakeFiles/BplusTreeExe.dir/test/test8.cpp.i
-.PHONY : test/test8.cpp.i
+test/batch_query.cpp.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/BplusTreeExe.dir/build.make CMakeFiles/BplusTreeExe.dir/test/batch_query.cpp.i
+.PHONY : test/batch_query.cpp.i
 
-test/test8.s: test/test8.cpp.s
-.PHONY : test/test8.s
+test/batch_query.s: test/batch_query.cpp.s
+.PHONY : test/batch_query.s
 
 # target to generate assembly for a file
-test/test8.cpp.s:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/BplusTreeExe.dir/build.make CMakeFiles/BplusTreeExe.dir/test/test8.cpp.s
-.PHONY : test/test8.cpp.s
+test/batch_query.cpp.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/BplusTreeExe.dir/build.make CMakeFiles/BplusTreeExe.dir/test/batch_query.cpp.s
+.PHONY : test/batch_query.cpp.s
 
 # Help Target
 help:
@@ -292,9 +292,9 @@ help:
 	@echo "... gmock_main"
 	@echo "... gtest"
 	@echo "... gtest_main"
-	@echo "... test/test8.o"
-	@echo "... test/test8.i"
-	@echo "... test/test8.s"
+	@echo "... test/batch_query.o"
+	@echo "... test/batch_query.i"
+	@echo "... test/batch_query.s"
 .PHONY : help
 
 

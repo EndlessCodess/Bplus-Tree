@@ -6,5 +6,5 @@ CXX_DEFINES =
 
 CXX_INCLUDES = -I/root/xy/c_plusprojects/Bplus-Tree/include
 
-CXX_FLAGS = -g -g -O0 -Wall -Wextra -pedantic -Werror -std=c++17
+CXX_FLAGS = -O3 -DNDEBUG -Wall -Wextra -pedantic -Werror -std=c++17
 
