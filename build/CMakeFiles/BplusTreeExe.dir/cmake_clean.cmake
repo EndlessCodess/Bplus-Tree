@@ -1,6 +1,6 @@
 file(REMOVE_RECURSE
-  "../bin/Release/BplusTreeExe"
-  "../bin/Release/BplusTreeExe.pdb"
+  "BplusTreeExe"
+  "BplusTreeExe.pdb"
   "CMakeFiles/BplusTreeExe.dir/test/batch_query.cpp.o"
   "CMakeFiles/BplusTreeExe.dir/test/batch_query.cpp.o.d"
 )

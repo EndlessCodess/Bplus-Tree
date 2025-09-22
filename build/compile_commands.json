@@ -1,27 +1,27 @@
 [
 {
   "directory": "/root/xy/c_plusprojects/Bplus-Tree/build",
-  "command": "/usr/bin/c++  -I/root/xy/c_plusprojects/Bplus-Tree/include -O3 -DNDEBUG -Wall -Wextra -pedantic -Werror -std=c++17 -o CMakeFiles/BplusTreeExe.dir/test/batch_query.cpp.o -c /root/xy/c_plusprojects/Bplus-Tree/test/batch_query.cpp",
+  "command": "/usr/bin/g++  -I/root/xy/c_plusprojects/Bplus-Tree/include -Wall -Wextra -pedantic -Werror -std=c++17 -o CMakeFiles/BplusTreeExe.dir/test/batch_query.cpp.o -c /root/xy/c_plusprojects/Bplus-Tree/test/batch_query.cpp",
   "file": "/root/xy/c_plusprojects/Bplus-Tree/test/batch_query.cpp"
 },
 {
   "directory": "/root/xy/c_plusprojects/Bplus-Tree/build/third_party/googletest/googlemock",
-  "command": "/usr/bin/c++  -I/root/xy/c_plusprojects/Bplus-Tree/third_party/googletest/googlemock/include -I/root/xy/c_plusprojects/Bplus-Tree/third_party/googletest/googlemock -isystem /root/xy/c_plusprojects/Bplus-Tree/third_party/googletest/googletest/include -isystem /root/xy/c_plusprojects/Bplus-Tree/third_party/googletest/googletest -O3 -DNDEBUG -Wall -Wshadow -Wno-error=dangling-else -DGTEST_HAS_PTHREAD=1 -fexceptions -Wextra -Wno-unused-parameter -Wno-missing-field-initializers -Wall -Wextra -pedantic -Werror -std=c++17 -o CMakeFiles/gmock.dir/src/gmock-all.cc.o -c /root/xy/c_plusprojects/Bplus-Tree/third_party/googletest/googlemock/src/gmock-all.cc",
+  "command": "/usr/bin/g++  -I/root/xy/c_plusprojects/Bplus-Tree/third_party/googletest/googlemock/include -I/root/xy/c_plusprojects/Bplus-Tree/third_party/googletest/googlemock -isystem /root/xy/c_plusprojects/Bplus-Tree/third_party/googletest/googletest/include -isystem /root/xy/c_plusprojects/Bplus-Tree/third_party/googletest/googletest -Wall -Wshadow -Wno-error=dangling-else -DGTEST_HAS_PTHREAD=1 -fexceptions -Wextra -Wno-unused-parameter -Wno-missing-field-initializers -Wall -Wextra -pedantic -Werror -std=c++17 -o CMakeFiles/gmock.dir/src/gmock-all.cc.o -c /root/xy/c_plusprojects/Bplus-Tree/third_party/googletest/googlemock/src/gmock-all.cc",
   "file": "/root/xy/c_plusprojects/Bplus-Tree/third_party/googletest/googlemock/src/gmock-all.cc"
 },
 {
   "directory": "/root/xy/c_plusprojects/Bplus-Tree/build/third_party/googletest/googlemock",
-  "command": "/usr/bin/c++  -isystem /root/xy/c_plusprojects/Bplus-Tree/third_party/googletest/googlemock/include -isystem /root/xy/c_plusprojects/Bplus-Tree/third_party/googletest/googlemock -isystem /root/xy/c_plusprojects/Bplus-Tree/third_party/googletest/googletest/include -isystem /root/xy/c_plusprojects/Bplus-Tree/third_party/googletest/googletest -O3 -DNDEBUG -Wall -Wshadow -Wno-error=dangling-else -DGTEST_HAS_PTHREAD=1 -fexceptions -Wextra -Wno-unused-parameter -Wno-missing-field-initializers -Wall -Wextra -pedantic -Werror -std=c++17 -o CMakeFiles/gmock_main.dir/src/gmock_main.cc.o -c /root/xy/c_plusprojects/Bplus-Tree/third_party/googletest/googlemock/src/gmock_main.cc",
+  "command": "/usr/bin/g++  -isystem /root/xy/c_plusprojects/Bplus-Tree/third_party/googletest/googlemock/include -isystem /root/xy/c_plusprojects/Bplus-Tree/third_party/googletest/googlemock -isystem /root/xy/c_plusprojects/Bplus-Tree/third_party/googletest/googletest/include -isystem /root/xy/c_plusprojects/Bplus-Tree/third_party/googletest/googletest -Wall -Wshadow -Wno-error=dangling-else -DGTEST_HAS_PTHREAD=1 -fexceptions -Wextra -Wno-unused-parameter -Wno-missing-field-initializers -Wall -Wextra -pedantic -Werror -std=c++17 -o CMakeFiles/gmock_main.dir/src/gmock_main.cc.o -c /root/xy/c_plusprojects/Bplus-Tree/third_party/googletest/googlemock/src/gmock_main.cc",
   "file": "/root/xy/c_plusprojects/Bplus-Tree/third_party/googletest/googlemock/src/gmock_main.cc"
 },
 {
   "directory": "/root/xy/c_plusprojects/Bplus-Tree/build/third_party/googletest/googletest",
-  "command": "/usr/bin/c++  -I/root/xy/c_plusprojects/Bplus-Tree/third_party/googletest/googletest/include -I/root/xy/c_plusprojects/Bplus-Tree/third_party/googletest/googletest -O3 -DNDEBUG -Wall -Wshadow -Wno-error=dangling-else -DGTEST_HAS_PTHREAD=1 -fexceptions -Wextra -Wno-unused-parameter -Wno-missing-field-initializers -Wall -Wextra -pedantic -Werror -std=c++17 -o CMakeFiles/gtest.dir/src/gtest-all.cc.o -c /root/xy/c_plusprojects/Bplus-Tree/third_party/googletest/googletest/src/gtest-all.cc",
+  "command": "/usr/bin/g++  -I/root/xy/c_plusprojects/Bplus-Tree/third_party/googletest/googletest/include -I/root/xy/c_plusprojects/Bplus-Tree/third_party/googletest/googletest -Wall -Wshadow -Wno-error=dangling-else -DGTEST_HAS_PTHREAD=1 -fexceptions -Wextra -Wno-unused-parameter -Wno-missing-field-initializers -Wall -Wextra -pedantic -Werror -std=c++17 -o CMakeFiles/gtest.dir/src/gtest-all.cc.o -c /root/xy/c_plusprojects/Bplus-Tree/third_party/googletest/googletest/src/gtest-all.cc",
   "file": "/root/xy/c_plusprojects/Bplus-Tree/third_party/googletest/googletest/src/gtest-all.cc"
 },
 {
   "directory": "/root/xy/c_plusprojects/Bplus-Tree/build/third_party/googletest/googletest",
-  "command": "/usr/bin/c++  -isystem /root/xy/c_plusprojects/Bplus-Tree/third_party/googletest/googletest/include -isystem /root/xy/c_plusprojects/Bplus-Tree/third_party/googletest/googletest -O3 -DNDEBUG -Wall -Wshadow -Wno-error=dangling-else -DGTEST_HAS_PTHREAD=1 -fexceptions -Wextra -Wno-unused-parameter -Wno-missing-field-initializers -Wall -Wextra -pedantic -Werror -std=c++17 -o CMakeFiles/gtest_main.dir/src/gtest_main.cc.o -c /root/xy/c_plusprojects/Bplus-Tree/third_party/googletest/googletest/src/gtest_main.cc",
+  "command": "/usr/bin/g++  -isystem /root/xy/c_plusprojects/Bplus-Tree/third_party/googletest/googletest/include -isystem /root/xy/c_plusprojects/Bplus-Tree/third_party/googletest/googletest -Wall -Wshadow -Wno-error=dangling-else -DGTEST_HAS_PTHREAD=1 -fexceptions -Wextra -Wno-unused-parameter -Wno-missing-field-initializers -Wall -Wextra -pedantic -Werror -std=c++17 -o CMakeFiles/gtest_main.dir/src/gtest_main.cc.o -c /root/xy/c_plusprojects/Bplus-Tree/third_party/googletest/googletest/src/gtest_main.cc",
   "file": "/root/xy/c_plusprojects/Bplus-Tree/third_party/googletest/googletest/src/gtest_main.cc"
 }
 ]
